@@ -16,7 +16,7 @@ export default async (req, res) => {
       .replace("{fields}", "name,picture");
 
     const result = await axios(meEndpont);
-
+    console.log(`From meEndpoint api call result.data:`, result.data);
     res.json({ name: "Oauth", response: result.data });
   } catch (error) {
     res.json({ name: "Oauth", response: error });
