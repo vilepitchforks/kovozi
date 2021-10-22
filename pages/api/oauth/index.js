@@ -1,11 +1,21 @@
 import axios from "axios";
 import { hostUrl, facebook } from "../../../config";
 
+const appId =
+  process.env.NODE_ENV === "production"
+    ? process.env.FACEBOOK_APP_ID
+    : process.env.FACEBOOK_APP_ID_TEST;
+
+const appSecret =
+  process.env.NODE_ENV === "production"
+    ? process.env.FACEBOOK_APP_SECRET
+    : process.env.FACEBOOK_APP_SECRET_TEST;
+
 export default async (req, res) => {
   const oauthUrl = facebook.accessTokenUrl
-    .replace("{app-id}", process.env.FACEBOOK_APP_ID)
+    .replace("{app-id}", appId)
     .replace("{redirect-uri}", hostUrl + "/api/oauth")
-    .replace("{app-secret}", process.env.FACEBOOK_APP_SECRET)
+    .replace("{app-secret}", appSecret)
     .replace("{code-parameter}", req.query.code);
 
   try {
