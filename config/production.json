@@ -1,5 +1,5 @@
 {
-  "hostUrl": "https://kovozi.vercel.app",
+  "hostUrl": "https://kovozi.ga",
   "facebook": {
     "appId": "611770586625092",
     "loginUrl": "https://www.facebook.com/v12.0/dialog/oauth?client_id={app-id}&redirect_uri={redirect-uri}&state={state-param}&auth_type={auth-type}",
