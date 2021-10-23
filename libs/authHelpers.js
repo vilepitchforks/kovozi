@@ -24,7 +24,7 @@ export const checkAuth = (req, res) => {
     return false;
   } catch (err) {
     // If token is expired or any errors occurred, expire kvuid cookie
-    cookies.set("kvuid", "" /* , { secure } */);
+    cookies.set("kvuid", "");
     return false;
   }
 };
@@ -40,10 +40,10 @@ export const getAuthUser = async (req, res) => {
       if (user) return { ...user._doc, _id: user._doc._id.toString() };
 
       // If user does not exist, redirect to /login
-      cookies.set("kvuid", "" /* , { secure } */);
+      cookies.set("kvuid", "");
     } catch (error) {
       console.warn("Error fetching user data: ", error);
-      cookies.set("kvuid", "" /*  { secure } */);
+      cookies.set("kvuid", "");
     }
   }
   return false;

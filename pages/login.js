@@ -10,7 +10,7 @@ const oauthUrl = facebook.loginUrl
   .replace("{redirect-uri}", hostUrl + "/api/oauth")
   .replace("{auth-type}", "rerequest");
 
-export default function Home() {
+export default function Login({ query }) {
   return (
     <div className={styles.container}>
       <Head>
@@ -18,18 +18,20 @@ export default function Home() {
         <meta name="description" content="Login | KoVozi" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
+      {query?.error === "access_denied" && (
+        <p>Please grant the necessary permisssions.</p>
+      )}
       <a href={oauthUrl}>Login</a>
     </div>
   );
 }
 
-export const getServerSideProps = async ({ req, res }) => {
+export const getServerSideProps = async ({ req, res, query }) => {
   const isAuthenticated = checkAuth(req, res);
 
   // If user is authenticated, redirect to home /
   if (isAuthenticated)
     return { redirect: { destination: "/", permanent: false } };
 
-  return { props: {} };
+  return { props: { query } };
 };
