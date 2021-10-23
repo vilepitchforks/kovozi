@@ -18,6 +18,8 @@ export default async (req, res) => {
       .status(400)
       .json({ success: false, message: "Only GET requests are allowed." });
 
+  console.log(`req.protocol: `, req.protocol);
+
   const cookies = new Cookies(req, res);
 
   const oauthUrl = facebook.accessTokenUrl
@@ -42,8 +44,8 @@ export default async (req, res) => {
 
     const redirectHome = user => {
       cookies.set("kvuid", makeAuthToken(user._id), {
-        maxAge: tokenData.expires_in * 1000,
-        secure
+        maxAge: tokenData.expires_in * 1000
+        // secure
       });
 
       return res.redirect("/");
