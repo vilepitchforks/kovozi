@@ -1,4 +1,4 @@
-import Head from "next/head";
+import MetaHead from "../components/MetaHead/MetaHead";
 
 import { hostUrl, facebook } from "../config";
 import { checkAuth } from "../libs/authHelpers";
@@ -12,11 +12,10 @@ const oauthUrl = facebook.loginUrl
 const Login = ({ query }) => {
   return (
     <div>
-      <Head>
+      <MetaHead>
         <title>Login | KoVozi</title>
-        <meta name="description" content="Login | KoVozi" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      </MetaHead>
+
       {query?.error === "access_denied" && (
         <p>Please grant the necessary permisssions.</p>
       )}

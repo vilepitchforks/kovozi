@@ -19,6 +19,9 @@ export const checkAuth = (req, res) => {
       req.userId = decoded.uid;
       return true;
     }
+
+    // If something is wrong with the token, expire kvuid cookie
+    cookies.set("kvuid", "");
     return false;
   } catch (err) {
     // If token is expired or any errors occurred, expire kvuid cookie
