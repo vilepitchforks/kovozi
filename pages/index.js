@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 import MetaHead from "../components/MetaHead/MetaHead";
 
@@ -24,7 +25,10 @@ export default function Home({ user }) {
 
           <h2>{user.name}</h2>
         </div>
-        <a href="/api/logout">Logout</a>
+
+        <Link href="/api/logout">
+          <a>Logout</a>
+        </Link>
       </main>
 
       <footer></footer>
