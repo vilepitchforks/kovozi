@@ -6,7 +6,7 @@ import { connectDb } from "../../../libs/db.js";
 import User from "../../../models/user.js";
 
 import { hostUrl, facebook } from "../../../config";
-import { appSecret, secure } from "../../../config/constants.js";
+import { appSecret } from "../../../config/constants.js";
 import { makeAuthToken } from "../../../libs/authHelpers.js";
 
 connectDb();
@@ -56,18 +56,26 @@ export default async (req, res) => {
         existingUser.accessTokenExpires =
           new Date().getTime() + tokenData.expires_in * 1000;
 
-        await existingUser.save();
+        existingUser
+          .save()
+          .then(res => res)
+          .catch(console.log);
 
         redirectHome(existingUser);
       } else {
         // If user does not exist in DB, create new user
-        const user = await User.create({
+        const user = new User({
           name: userData.name,
           picture: userData.picture,
           id: userData.id,
           accessToken: tokenData.access_token,
           accessTokenExpires: new Date().getTime() + tokenData.expires_in * 1000
         });
+
+        user
+          .save()
+          .then(res => res)
+          .catch(console.log);
 
         redirectHome(user);
       }

@@ -1,8 +1,6 @@
 import Cookies from "cookies";
 import jwt from "jsonwebtoken";
 
-import { secure } from "../config/constants.js";
-
 import { connectDb } from "./db.js";
 
 import User from "../models/user.js";
