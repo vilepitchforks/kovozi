@@ -1,7 +1,5 @@
 import Head from "next/head";
 
-import styles from "../styles/Home.module.css";
-
 import { hostUrl, facebook } from "../config";
 import { checkAuth } from "../libs/authHelpers";
 
@@ -10,9 +8,10 @@ const oauthUrl = facebook.loginUrl
   .replace("{redirect-uri}", hostUrl + "/api/oauth")
   .replace("{auth-type}", "rerequest");
 
-export default function Login({ query }) {
+// export default function Login({ query }) {
+const Login = ({ query }) => {
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
         <title>Login | KoVozi</title>
         <meta name="description" content="Login | KoVozi" />
@@ -24,7 +23,7 @@ export default function Login({ query }) {
       <a href={oauthUrl}>Login</a>
     </div>
   );
-}
+};
 
 export const getServerSideProps = async ({ req, res, query }) => {
   const isAuthenticated = checkAuth(req, res);
@@ -35,3 +34,5 @@ export const getServerSideProps = async ({ req, res, query }) => {
 
   return { props: { query } };
 };
+
+export default Login;

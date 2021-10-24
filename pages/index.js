@@ -46,7 +46,7 @@ export default function Home({ user }) {
         >
           Powered by{" "}
           <span>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
+            {/* <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} /> */}
           </span>
         </a>
       </footer>
