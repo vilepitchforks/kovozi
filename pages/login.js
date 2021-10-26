@@ -82,6 +82,8 @@ const Login = ({ query }) => {
   );
 };
 
+Login.skipLayout = true;
+
 export const getServerSideProps = async ({ req, res, query }) => {
   const isAuthenticated = checkAuth(req, res);
 
@@ -93,7 +95,3 @@ export const getServerSideProps = async ({ req, res, query }) => {
 };
 
 export default Login;
-
-// {query?.error === "access_denied" && (
-//   <p>Please grant the necessary permisssions.</p>
-// )}

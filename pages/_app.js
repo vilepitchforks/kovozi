@@ -15,6 +15,9 @@ Router.events.on("routeChangeComplete", () => NProgress.done());
 Router.events.on("routeChangeError", () => NProgress.done());
 
 function MyApp({ Component, pageProps }) {
+  // Do not apply global Layout. For example on Login page
+  if (Component.skipLayout) return <Component {...pageProps} />;
+
   return (
     <Layout>
       <Component {...pageProps} />

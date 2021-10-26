@@ -16,7 +16,7 @@ class MyDocument extends Document {
           <link rel="apple-touch-icon" href="/icon.png"></link>
           <meta name="theme-color" content="#121212" />
         </Head>
-        <body>
+        <body className="bg-carbon-ebony">
           <Main />
           <NextScript />
         </body>
