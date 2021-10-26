@@ -49,13 +49,13 @@ const Login = ({ query }) => {
               <rect width="100%" height="100%" fill="transparent" />
               <g>
                 <linearGradient id="a">
-                  <stop offset="0%" stop-color="#D6D6D6" />
+                  <stop offset="0%" stopColor="#D6D6D6" />
                   <stop offset="100%" />
                 </linearGradient>
                 <path
                   d="M64 0A64 64 0 1 1 0 64 64 64 0 0 1 64 0zm1 20a44 44 0 1 1-44 44 44 44 0 0 1 44-44z"
                   fill="url(#a)"
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                 />
                 <animateTransform
                   attributeName="transform"
