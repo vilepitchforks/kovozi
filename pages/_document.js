@@ -1,7 +1,7 @@
 import Document, { Html, Head, Main, NextScript } from "next/document";
 
 // _document.js copied from https://nextjs.org/docs/advanced-features/custom-document
-// Added lins and meta tag for PWA
+// Added links and meta tag for PWA
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
     const initialProps = await Document.getInitialProps(ctx);

@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import MetaHead from "../components/MetaHead/MetaHead";
 
 import { hostUrl, facebook } from "../config";
@@ -11,15 +13,42 @@ const oauthUrl = facebook.loginUrl
 // export default function Login({ query }) {
 const Login = ({ query }) => {
   return (
-    <div>
+    <div className="h-screen flex justify-center items-center">
       <MetaHead>
         <title>Login | KoVozi</title>
       </MetaHead>
 
-      {query?.error === "access_denied" && (
-        <p>Please grant the necessary permisssions.</p>
-      )}
-      <a href={oauthUrl}>Login</a>
+      <div className="flex flex-col items-center">
+        <div className="flex justify-center h-48 w-48 items-center bg-carbon-pewter rounded-full">
+          <Image
+            src="/icon-512x512.png"
+            alt="Ko Vozi?"
+            width={168}
+            height={168}
+          />
+        </div>
+        <p className="text-5xl mt-1 text-carbon-pewter">Ko Vozi?</p>
+        <a
+          href={oauthUrl}
+          className="flex w-64 h-14 rounded-xl shadow-xl mt-16 text-white bg-facebook-button"
+        >
+          <svg className="h-10 m-2 absolute" viewBox="0 0 320 512">
+            <path
+              fill="currentColor"
+              d="m279.1 288 14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.4 0 225.4 0c-73.22 0-121.1 44.38-121.1 124.7v70.62H22.89V288h81.39v224h100.2V288z"
+            />
+          </svg>
+          <span className="text-3xl m-auto">Login</span>
+        </a>
+
+        {query?.error === "access_denied" && (
+          <div>
+            <span className="absolute transform -translate-x-1/2 mt-5 text-red-500">
+              Alo momak! Logiraj se.
+            </span>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
@@ -35,3 +64,7 @@ export const getServerSideProps = async ({ req, res, query }) => {
 };
 
 export default Login;
+
+// {query?.error === "access_denied" && (
+//   <p>Please grant the necessary permisssions.</p>
+// )}
