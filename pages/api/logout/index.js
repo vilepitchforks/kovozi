@@ -6,5 +6,5 @@ export default withProtect((req, res) => {
   const cookies = new Cookies(req, res);
 
   cookies.set("kvuid", "");
-  res.redirect("/login");
+  return res.redirect("/login");
 });
