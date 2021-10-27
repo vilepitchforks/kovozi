@@ -11,7 +11,7 @@ const Navigation = () => {
     path === pathname ? "border-carbon-pewter" : "border-carbon-black";
 
   return (
-    <nav className="bg-carbon-black">
+    <nav className="fixed w-full z-10 bg-carbon-black">
       <div className="flex flex-row justify-between fixed bottom-0 w-full md:relative md:max-w-screen-md mx-auto bg-carbon-black">
         <div className="hidden md:flex items-center">
           <div className="flex justify-center items-center h-12 w-12 bg-carbon-pewter rounded-full">
@@ -22,7 +22,7 @@ const Navigation = () => {
               height={38}
             />
           </div>
-          <span className="ml-4 mr-12 text-carbon-pewter">Ko Vozi ?</span>
+          <span className="mx-4 text-carbon-pewter">Ko Vozi ?</span>
         </div>
 
         <ul className="flex justify-evenly flex-1 h-20 md:h-12">
@@ -77,9 +77,7 @@ const Navigation = () => {
         </ul>
 
         <div className="hidden md:flex items-center">
-          <span className="my-auto m12-4 mr-4 text-carbon-pewter">
-            John Doe
-          </span>
+          <span className="my-auto mx-4 text-carbon-pewter">John Doe</span>
           <div className="flex justify-center items-center h-9 w-9 bg-carbon-pewter rounded-full">
             <Image
               src="https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=4385160084852493&height=50&width=50&ext=1637657866&hash=AeTQQF8zhooHg7neMBM"

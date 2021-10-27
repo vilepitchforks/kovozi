@@ -36,6 +36,14 @@ export default async (req, res) => {
         .replace("{access-token}", tokenData.access_token)
         .replace("{fields}", "name,picture");
 
+      const normalPic = facebook.meUrl
+        .replace("{access-token}", tokenData.access_token)
+        .replace("{fields}", "picture.type(normal)");
+
+      const largePic = facebook.meUrl
+        .replace("{access-token}", tokenData.access_token)
+        .replace("{fields}", "picture.type(large)");
+
       // Get user data with access_token
       const { data: userData } = await axios(meEndpont);
 
@@ -56,28 +64,41 @@ export default async (req, res) => {
         existingUser.accessTokenExpires =
           new Date().getTime() + tokenData.expires_in * 1000;
 
+        redirectHome(existingUser);
+
         existingUser
           .save()
           .then(res => res)
           .catch(console.log);
-
-        redirectHome(existingUser);
       } else {
         // If user does not exist in DB, create new user
         const user = new User({
-          name: userData.name,
-          picture: userData.picture,
           id: userData.id,
+          name: userData.name,
+          pictures: {
+            small: userData.picture.data
+          },
           accessToken: tokenData.access_token,
           accessTokenExpires: new Date().getTime() + tokenData.expires_in * 1000
         });
 
+        redirectHome(user);
+
         user
           .save()
-          .then(res => res)
-          .catch(console.log);
+          .then(async user => {
+            // Add normal and large profile picture to user profile
+            const [normalPicData, largePicData] = await Promise.all([
+              axios(normalPic),
+              axios(largePic)
+            ]);
 
-        redirectHome(user);
+            user.pictures.normal = normalPicData.data.picture.data;
+            user.pictures.large = largePicData.data.picture.data;
+
+            return user.save().then(res => res);
+          })
+          .catch(console.log);
       }
     } catch (error) {
       console.warn(`Error in oauth route: `, error.toJSON());

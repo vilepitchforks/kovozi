@@ -2,37 +2,166 @@ import Image from "next/image";
 import Link from "next/link";
 
 import MetaHead from "../components/MetaHead/MetaHead";
+import TrenutnoVozi from "../components/TrenutnoVozi/TrenutnoVozi";
 
 import { checkAuth, getAuthUser } from "../libs/authHelpers";
 
 export default function Home({ user }) {
   return (
-    <div>
+    <>
       <MetaHead>
         <title>{user.name ? user.name + " | KoVozi" : "KoVozi"}</title>
       </MetaHead>
-
-      <main>
-        <h1>Welcome {user.name}!</h1>
-
-        <div style={{ display: "flex" }}>
-          <Image
-            src={user.picture.data.url}
-            alt={user.name}
-            width={user.picture.data.width}
-            height={user.picture.data.height}
-          />
-
-          <h2>{user.name}</h2>
-        </div>
-
-        <Link href="/api/logout">
-          <a>Logout</a>
-        </Link>
-      </main>
-
-      <footer></footer>
-    </div>
+      <TrenutnoVozi />
+      <Link href="/api/logout">
+        <a>Logout</a>
+      </Link>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur sunt
+        odit voluptas nam aliquid quisquam aliquam nihil assumenda, ipsam,
+        aspernatur laboriosam eligendi perspiciatis libero dolor ea harum
+        mollitia dignissimos praesentium. Lorem ipsum dolor sit amet consectetur
+        adipisicing elit. Corrupti, suscipit explicabo, atque laborum, quae
+        similique quod deserunt natus dolor tempora eos vero exercitationem
+        doloremque id quam cum? Iusto, officia dignissimos.
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur sunt
+        odit voluptas nam aliquid quisquam aliquam nihil assumenda, ipsam,
+        aspernatur laboriosam eligendi perspiciatis libero dolor ea harum
+        mollitia dignissimos praesentium. Lorem ipsum dolor sit amet consectetur
+        adipisicing elit. Corrupti, suscipit explicabo, atque laborum, quae
+        similique quod deserunt natus dolor tempora eos vero exercitationem
+        doloremque id quam cum? Iusto, officia dignissimos.
+      </p>{" "}
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur sunt
+        odit voluptas nam aliquid quisquam aliquam nihil assumenda, ipsam,
+        aspernatur laboriosam eligendi perspiciatis libero dolor ea harum
+        mollitia dignissimos praesentium. Lorem ipsum dolor sit amet consectetur
+        adipisicing elit. Corrupti, suscipit explicabo, atque laborum, quae
+        similique quod deserunt natus dolor tempora eos vero exercitationem
+        doloremque id quam cum? Iusto, officia dignissimos.
+      </p>{" "}
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur sunt
+        odit voluptas nam aliquid quisquam aliquam nihil assumenda, ipsam,
+        aspernatur laboriosam eligendi perspiciatis libero dolor ea harum
+        mollitia dignissimos praesentium. Lorem ipsum dolor sit amet consectetur
+        adipisicing elit. Corrupti, suscipit explicabo, atque laborum, quae
+        similique quod deserunt natus dolor tempora eos vero exercitationem
+        doloremque id quam cum? Iusto, officia dignissimos.
+      </p>{" "}
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur sunt
+        odit voluptas nam aliquid quisquam aliquam nihil assumenda, ipsam,
+        aspernatur laboriosam eligendi perspiciatis libero dolor ea harum
+        mollitia dignissimos praesentium. Lorem ipsum dolor sit amet consectetur
+        adipisicing elit. Corrupti, suscipit explicabo, atque laborum, quae
+        similique quod deserunt natus dolor tempora eos vero exercitationem
+        doloremque id quam cum? Iusto, officia dignissimos.
+      </p>{" "}
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur sunt
+        odit voluptas nam aliquid quisquam aliquam nihil assumenda, ipsam,
+        aspernatur laboriosam eligendi perspiciatis libero dolor ea harum
+        mollitia dignissimos praesentium. Lorem ipsum dolor sit amet consectetur
+        adipisicing elit. Corrupti, suscipit explicabo, atque laborum, quae
+        similique quod deserunt natus dolor tempora eos vero exercitationem
+        doloremque id quam cum? Iusto, officia dignissimos.
+      </p>{" "}
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur sunt
+        odit voluptas nam aliquid quisquam aliquam nihil assumenda, ipsam,
+        aspernatur laboriosam eligendi perspiciatis libero dolor ea harum
+        mollitia dignissimos praesentium. Lorem ipsum dolor sit amet consectetur
+        adipisicing elit. Corrupti, suscipit explicabo, atque laborum, quae
+        similique quod deserunt natus dolor tempora eos vero exercitationem
+        doloremque id quam cum? Iusto, officia dignissimos.
+      </p>{" "}
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur sunt
+        odit voluptas nam aliquid quisquam aliquam nihil assumenda, ipsam,
+        aspernatur laboriosam eligendi perspiciatis libero dolor ea harum
+        mollitia dignissimos praesentium. Lorem ipsum dolor sit amet consectetur
+        adipisicing elit. Corrupti, suscipit explicabo, atque laborum, quae
+        similique quod deserunt natus dolor tempora eos vero exercitationem
+        doloremque id quam cum? Iusto, officia dignissimos.
+      </p>{" "}
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur sunt
+        odit voluptas nam aliquid quisquam aliquam nihil assumenda, ipsam,
+        aspernatur laboriosam eligendi perspiciatis libero dolor ea harum
+        mollitia dignissimos praesentium. Lorem ipsum dolor sit amet consectetur
+        adipisicing elit. Corrupti, suscipit explicabo, atque laborum, quae
+        similique quod deserunt natus dolor tempora eos vero exercitationem
+        doloremque id quam cum? Iusto, officia dignissimos.
+      </p>{" "}
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur sunt
+        odit voluptas nam aliquid quisquam aliquam nihil assumenda, ipsam,
+        aspernatur laboriosam eligendi perspiciatis libero dolor ea harum
+        mollitia dignissimos praesentium. Lorem ipsum dolor sit amet consectetur
+        adipisicing elit. Corrupti, suscipit explicabo, atque laborum, quae
+        similique quod deserunt natus dolor tempora eos vero exercitationem
+        doloremque id quam cum? Iusto, officia dignissimos.
+      </p>{" "}
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur sunt
+        odit voluptas nam aliquid quisquam aliquam nihil assumenda, ipsam,
+        aspernatur laboriosam eligendi perspiciatis libero dolor ea harum
+        mollitia dignissimos praesentium. Lorem ipsum dolor sit amet consectetur
+        adipisicing elit. Corrupti, suscipit explicabo, atque laborum, quae
+        similique quod deserunt natus dolor tempora eos vero exercitationem
+        doloremque id quam cum? Iusto, officia dignissimos.
+      </p>{" "}
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur sunt
+        odit voluptas nam aliquid quisquam aliquam nihil assumenda, ipsam,
+        aspernatur laboriosam eligendi perspiciatis libero dolor ea harum
+        mollitia dignissimos praesentium. Lorem ipsum dolor sit amet consectetur
+        adipisicing elit. Corrupti, suscipit explicabo, atque laborum, quae
+        similique quod deserunt natus dolor tempora eos vero exercitationem
+        doloremque id quam cum? Iusto, officia dignissimos.
+      </p>{" "}
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur sunt
+        odit voluptas nam aliquid quisquam aliquam nihil assumenda, ipsam,
+        aspernatur laboriosam eligendi perspiciatis libero dolor ea harum
+        mollitia dignissimos praesentium. Lorem ipsum dolor sit amet consectetur
+        adipisicing elit. Corrupti, suscipit explicabo, atque laborum, quae
+        similique quod deserunt natus dolor tempora eos vero exercitationem
+        doloremque id quam cum? Iusto, officia dignissimos.
+      </p>{" "}
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur sunt
+        odit voluptas nam aliquid quisquam aliquam nihil assumenda, ipsam,
+        aspernatur laboriosam eligendi perspiciatis libero dolor ea harum
+        mollitia dignissimos praesentium. Lorem ipsum dolor sit amet consectetur
+        adipisicing elit. Corrupti, suscipit explicabo, atque laborum, quae
+        similique quod deserunt natus dolor tempora eos vero exercitationem
+        doloremque id quam cum? Iusto, officia dignissimos.
+      </p>{" "}
+      <TrenutnoVozi />
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur sunt
+        odit voluptas nam aliquid quisquam aliquam nihil assumenda, ipsam,
+        aspernatur laboriosam eligendi perspiciatis libero dolor ea harum
+        mollitia dignissimos praesentium. Lorem ipsum dolor sit amet consectetur
+        adipisicing elit. Corrupti, suscipit explicabo, atque laborum, quae
+        similique quod deserunt natus dolor tempora eos vero exercitationem
+        doloremque id quam cum? Iusto, officia dignissimos.
+      </p>{" "}
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur sunt
+        odit voluptas nam aliquid quisquam aliquam nihil assumenda, ipsam,
+        aspernatur laboriosam eligendi perspiciatis libero dolor ea harum
+        mollitia dignissimos praesentium. Lorem ipsum dolor sit amet consectetur
+        adipisicing elit. Corrupti, suscipit explicabo, atque laborum, quae
+        similique quod deserunt natus dolor tempora eos vero exercitationem
+        doloremque id quam cum? Iusto, officia dignissimos.
+      </p>
+    </>
   );
 }
 

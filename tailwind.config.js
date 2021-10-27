@@ -11,11 +11,14 @@ module.exports = {
         "carbon-gray": scheme.carbonGray,
         "carbon-pewter": scheme.carbonPewter,
         "facebook-button": scheme.facebookButton
+      },
+      fontSize: {
+        tiny: ".625rem"
       }
     }
   },
   variants: {
     extend: {}
   },
-  plugins: []
+  plugins: [require("tailwind-scrollbar-hide")]
 };

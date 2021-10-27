@@ -1,9 +1,22 @@
 import mongoose from "mongoose";
 
+// const childSchema = new Schema({ name: { type: String, required: true } });
+
+const picture = {
+  height: Number,
+  is_silhouette: Boolean,
+  url: String,
+  width: Number
+};
+
 const userSchema = new mongoose.Schema({
-  name: String,
-  picture: Object,
   id: String,
+  name: String,
+  pictures: {
+    small: picture,
+    normal: picture,
+    large: picture
+  },
   accessToken: String,
   accessTokenExpires: Date
 });
