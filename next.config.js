@@ -3,7 +3,7 @@ const withPWA = require("next-pwa");
 module.exports = withPWA({
   reactStrictMode: true,
   images: {
-    domains: ["platform-lookaside.fbsbx.com"] // Whitelist images from facebook
+    domains: ["platform-lookaside.fbsbx.com", "randomuser.me"] // Whitelist images from facebook
   },
   pwa: {
     dest: "public",

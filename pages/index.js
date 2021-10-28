@@ -142,7 +142,6 @@ export default function Home({ user }) {
         similique quod deserunt natus dolor tempora eos vero exercitationem
         doloremque id quam cum? Iusto, officia dignissimos.
       </p>{" "}
-      <TrenutnoVozi />
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur sunt
         odit voluptas nam aliquid quisquam aliquam nihil assumenda, ipsam,

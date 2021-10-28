@@ -20,6 +20,7 @@ const Navigation = () => {
               alt="Ko Vozi?"
               width={38}
               height={38}
+              className="rounded-full"
             />
           </div>
           <span className="mx-4 text-carbon-pewter">Ko Vozi ?</span>

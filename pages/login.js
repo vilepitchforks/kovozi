@@ -27,6 +27,7 @@ const Login = ({ query }) => {
             alt="Ko Vozi?"
             width={168}
             height={168}
+            className="rounded-full"
           />
         </div>
         <p className="text-5xl mt-1 text-carbon-pewter">Ko Vozi?</p>
