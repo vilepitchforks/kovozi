@@ -1,6 +1,8 @@
 import { useEffect, useState, useRef, useLayoutEffect } from "react";
 import Image from "next/image";
 
+import { colorScheme } from "../../config/constants.js";
+
 const User = ({ isActive, user, activeUserRef, nonActiveUserRef }) => {
   const imageSize = isActive ? "h-44 w-44" : "h-24 w-24";
   const nameSize = isActive ? "text-4xl" : "text-xl";
@@ -119,29 +121,42 @@ const TrenutnoVozi = () => {
   }, [users, activeUser]);
 
   return (
-    <section className="overflow-x-hidden mt-5">
-      <div
-        ref={userContainerRef}
-        className="flex overflow-x-auto scrollbar-hide"
-      >
-        {users.map((user, i) => (
-          <User
-            key={i}
-            isActive={user.name.first === condition}
-            user={user}
-            activeUserRef={activeUserRef}
-            nonActiveUserRef={nonActiveUserRef}
-          />
-        ))}
+    <section>
+      <div className="overflow-x-hidden mt-5">
+        <div
+          ref={userContainerRef}
+          className="flex overflow-x-auto scrollbar-hide"
+        >
+          {users.map((user, i) => (
+            <User
+              key={i}
+              isActive={user.name.first === condition}
+              user={user}
+              activeUserRef={activeUserRef}
+              nonActiveUserRef={nonActiveUserRef}
+            />
+          ))}
+        </div>
       </div>
-      <button onClick={centerUsersSection}>Center</button>{" "}
-      <button onClick={() => setActiveUser("Sondre")}>Sondre</button>{" "}
-      <button onClick={() => setActiveUser("Ece")}>Ece</button>{" "}
-      <button onClick={() => setActiveUser("Addison")}>Addison</button>{" "}
-      <button onClick={() => setActiveUser("Anna")}>Anna</button>{" "}
-      <button onClick={() => setActiveUser("Mina")}>Mina</button>{" "}
-      <button onClick={() => setActiveUser("Kasper")}>Kasper</button>{" "}
-      <button onClick={() => setActiveUser("Random")}>Random</button>{" "}
+      <div className="flex justify-end">
+        <button
+          className="flex items-center justify-between"
+          onClick={centerUsersSection}
+        >
+          <svg className="h-4 ml-3 mr-1" viewBox="0 0 512 512">
+            <path
+              fill={colorScheme.carbonGray}
+              d="M504 274 392 378a24 24 0 0 1-40-17v-73H32c-18 0-32-14-32-33s14-31 32-31h320v-72a24 24 0 0 1 40-18l112 104c11 10 11 26 0 36z"
+            />
+          </svg>
+          <svg className="h-4 mr-3 ml-1" viewBox="0 0 512 512">
+            <path
+              fill={colorScheme.carbonGray}
+              d="M512 256c0 18-14 32-32 32H160v72a24 24 0 0 1-40 18L8 274c-11-10-11-26 0-36l112-104a24 24 0 0 1 40 17v73h320c18 0 32 14 32 32z"
+            />
+          </svg>
+        </button>
+      </div>
     </section>
   );
 };

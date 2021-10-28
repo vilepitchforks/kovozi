@@ -15,6 +15,10 @@ module.exports = {
       fontSize: {
         tiny: ".625rem"
       }
+      // https://tailwindui.com/documentation
+      // fontFamily: {
+      //   sans: ['Inter var', ...defaultTheme.fontFamily.sans],
+      // },
     }
   },
   variants: {
