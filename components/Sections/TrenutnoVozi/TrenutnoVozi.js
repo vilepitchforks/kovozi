@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef, useLayoutEffect } from "react";
 import Image from "next/image";
 
-import { colorScheme } from "../../config/constants.js";
+import { colorScheme } from "../../../config/constants.js";
 
 const User = ({ isActive, user, activeUserRef, nonActiveUserRef }) => {
   const imageSize = isActive ? "h-44 w-44" : "h-24 w-24";
@@ -50,7 +50,12 @@ const TrenutnoVozi = () => {
   const [users, setUsers] = useState([]);
   const [usersFetched, setUsersFetched] = useState(false);
 
-  const [activeUser, setActiveUser] = useState("Mikkel");
+  // const [showCenterBtn, setShowCenterBtn] = useState(false);
+  // const showCenterBtnInitState = useRef(true);
+
+  const [activeUser, setActiveUser] = useState("Kasper");
+
+  const time = useRef(Date.now());
 
   useEffect(() => {
     (async () => {
@@ -110,6 +115,8 @@ const TrenutnoVozi = () => {
       }px`;
 
     userContainerRef.current.scrollTo(offset - halfUsersPlaceholder, 0);
+    // showCenterBtn.current = false;
+    // setShowCenterBtn(false);
   };
 
   useLayoutEffect(() => {
@@ -120,12 +127,33 @@ const TrenutnoVozi = () => {
     };
   }, [users, activeUser]);
 
+  // const throttle = (fn, wait) => {
+  //   if (time.current + wait - Date.now() < 0) {
+  //     fn();
+  //     time.current = Date.now();
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   console.log(`showCenterBtn: `, showCenterBtn);
+  //   console.log(
+  //     `showCenterBtnInitState.current: `,
+  //     showCenterBtnInitState.current
+  //   );
+  // });
+
   return (
     <section>
       <div className="overflow-x-hidden mt-5">
         <div
           ref={userContainerRef}
           className="flex overflow-x-auto scrollbar-hide"
+          // onScroll={e => throttle(() => (showCenterBtn.current = true), 1000)}
+          // onScroll={e =>
+          //   throttle(() => {
+          //     showCenterBtnInitState.current && setShowCenterBtn(true);
+          //   }, 1000)
+          // }
         >
           {users.map((user, i) => (
             <User
@@ -138,10 +166,19 @@ const TrenutnoVozi = () => {
           ))}
         </div>
       </div>
-      <div className="flex justify-end">
+      {/* <div
+             className={`flex justify-end ${
+               showCenterBtn ? "visible" : "invisible"
+             }`}
+           > */}
+      <div className={"flex justify-end"}>
         <button
           className="flex items-center justify-between"
-          onClick={centerUsersSection}
+          onClick={() => {
+            centerUsersSection();
+            // showCenterBtnInitState.current = false;
+            // setShowCenterBtn(false);
+          }}
         >
           <svg className="h-4 ml-3 mr-1" viewBox="0 0 512 512">
             <path

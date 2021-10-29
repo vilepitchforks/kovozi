@@ -1,5 +1,7 @@
 import MetaHead from "../components/MetaHead/MetaHead";
-import TrenutnoVozi from "../components/TrenutnoVozi/TrenutnoVozi";
+
+import TrenutnoVozi from "../components/Sections/TrenutnoVozi/TrenutnoVozi";
+import KoIde from "../components/Sections/KoIde/KoIde";
 
 import { checkAuth, getAuthUser } from "../libs/authHelpers";
 
@@ -10,6 +12,7 @@ export default function Home({ user }) {
         <title>{user.name ? user.name + " | KoVozi" : "KoVozi"}</title>
       </MetaHead>
       <TrenutnoVozi />
+      <KoIde />
     </>
   );
 }

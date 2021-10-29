@@ -35,7 +35,7 @@ const Login = ({ query }) => {
           <p className="text-5xl mt-1 text-carbon-pewter">Ko Vozi?</p>
           <a
             href={oauthUrl}
-            className="flex relative w-64 h-14 rounded-xl shadow-xl mt-16 text-white bg-facebook-button"
+            className="flex relative w-64 h-14 rounded-xl shadow-xl mt-16 text-white bg-[#3B5998]"
             onClick={() => setShowSpinner(true)}
           >
             <svg className="h-10 m-2 absolute" viewBox="0 0 320 512">
