@@ -10,8 +10,7 @@ module.exports = {
         "carbon-black": scheme.carbonBlack,
         "carbon-ebony": scheme.carbonEbony,
         "carbon-gray": scheme.carbonGray,
-        "carbon-pewter": scheme.carbonPewter,
-        "facebook-button": scheme.facebookButton
+        "carbon-pewter": scheme.carbonPewter
       },
       fontSize: {
         tiny: ".625rem"

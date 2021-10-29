@@ -53,7 +53,7 @@ const TrenutnoVozi = () => {
   // const [showCenterBtn, setShowCenterBtn] = useState(false);
   // const showCenterBtnInitState = useRef(true);
 
-  const [activeUser, setActiveUser] = useState("Kasper");
+  const [activeUser, setActiveUser] = useState("Anna");
 
   const time = useRef(Date.now());
 

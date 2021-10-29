@@ -75,7 +75,7 @@ const Login = ({ query }) => {
 
           {query?.error === "access_denied" && (
             <div>
-              <span className="absolute transform -translate-x-1/2 mt-5 text-red-500">
+              <span className="absolute -translate-x-1/2 mt-5 text-red-500">
                 Alo momak! Logiraj se.
               </span>
             </div>
