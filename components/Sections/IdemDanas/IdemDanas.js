@@ -7,7 +7,7 @@ const KoIde = () => {
 
   return (
     <section className="flex justify-between mt-3">
-      <span className="flex">
+      <span className="flex ml-1">
         <div className="relative">
           <input
             checked={checked}
