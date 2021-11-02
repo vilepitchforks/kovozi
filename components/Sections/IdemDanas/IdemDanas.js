@@ -6,8 +6,8 @@ const KoIde = () => {
   const [checked, setChecked] = useState(false);
 
   return (
-    <section className="flex justify-between mt-3">
-      <span className="flex ml-1">
+    <section className="flex justify-between md:justify-center mt-3">
+      <span className="flex ml-1 w-64">
         <div className="relative">
           <input
             checked={checked}
@@ -24,7 +24,7 @@ const KoIde = () => {
           />
           <span className="peer-checked:left-6 peer-checked:bg-green-500 transition-all duration-500 pointer-events-none w-5 h-5 block absolute top-1 left-1 rounded-full bg-red-500"></span>
         </div>
-        <p className="ml-5 text-xl text-carbon-pewter">
+        <p className="ml-5 md:mr-5 text-xl text-carbon-pewter">
           {checked ? "Idem danas!" : "Ne idem danas."}
         </p>
       </span>
