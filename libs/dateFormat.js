@@ -1,17 +1,17 @@
 const days = [
+  "Nedjelja",
   "Ponedjeljak",
   "Utorak",
   "Srijeda",
   "Četvrtak",
   "Petak",
-  "Subota",
-  "Nedjelja"
+  "Subota"
 ];
 
 export const getDay = date => {
   const selectedDay = date ? new Date(date) : new Date();
   // Returns the name of the current day of the week from "days" array
-  return days[selectedDay.getDay() - 1];
+  return days[selectedDay.getDay()];
 };
 
 export const getDate = date => {
