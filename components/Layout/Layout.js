@@ -1,5 +1,6 @@
-import Footer from "../Footer/Footer.js";
 import Navigation from "../Navigation/Navigation.js";
+import NovaVoznjaBtn from "../Sections/NovaVoznjaBtn/NovaVoznjaBtn";
+import Footer from "../Footer/Footer.js";
 
 const Layout = ({ children }) => {
   return (
@@ -8,6 +9,7 @@ const Layout = ({ children }) => {
       <main className="md:mx-auto md:pt-12 md:max-w-screen-md ">
         {children}
       </main>
+      <NovaVoznjaBtn />
       <Footer />
     </>
   );

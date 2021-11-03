@@ -3,6 +3,7 @@ import MetaHead from "../components/MetaHead/MetaHead";
 import TrenutnoVozi from "../components/Sections/TrenutnoVozi/TrenutnoVozi";
 import IdemDanas from "../components/Sections/IdemDanas/IdemDanas";
 import TkoIde from "../components/Sections/TkoIde/TkoIde";
+import VozimOdDo from "../components/Sections/VozimOdDo/VozimOdDo";
 
 import { checkAuth, getAuthUser } from "../libs/authHelpers";
 
@@ -15,6 +16,7 @@ export default function Home({ user }) {
       <TrenutnoVozi />
       <IdemDanas />
       <TkoIde />
+      <VozimOdDo />
     </>
   );
 }

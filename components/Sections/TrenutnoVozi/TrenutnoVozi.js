@@ -53,14 +53,13 @@ const TrenutnoVozi = () => {
   // const [showCenterBtn, setShowCenterBtn] = useState(false);
   // const showCenterBtnInitState = useRef(true);
 
-  const [activeUser, setActiveUser] = useState("Anna");
+  // const [activeUser, setActiveUser] = useState("Mikkel");
 
-  const time = useRef(Date.now());
+  // const time = useRef(Date.now());
 
   useEffect(() => {
     (async () => {
       const localUsers = localStorage.getItem("users");
-
       if (localUsers) {
         setUsers(JSON.parse(localUsers));
       } else {
@@ -83,12 +82,10 @@ const TrenutnoVozi = () => {
 
   // Condition for setting the active current user
   // TODO: will most likely be the current date.
-  const condition = activeUser;
+  const condition = Math.floor(Math.random() * users.length);
 
   // Find the index of the active current user
-  const activeUserIndex = users.findIndex(
-    user => user.name.first === condition
-  );
+  const activeUserIndex = users.findIndex((user, i) => i === condition);
 
   const centerUsersSection = () => {
     const halfUsersPlaceholder = Math.floor(
@@ -125,7 +122,7 @@ const TrenutnoVozi = () => {
       userContainerRef.current.style.paddingLeft = "0px";
       userContainerRef.current.style.paddingRight = "0px";
     };
-  }, [users, activeUser]);
+  }, [users /* , activeUser */]);
 
   // const throttle = (fn, wait) => {
   //   if (time.current + wait - Date.now() < 0) {
@@ -158,7 +155,7 @@ const TrenutnoVozi = () => {
           {users.map((user, i) => (
             <User
               key={i}
-              isActive={user.name.first === condition}
+              isActive={i === condition}
               user={user}
               activeUserRef={activeUserRef}
               nonActiveUserRef={nonActiveUserRef}
@@ -166,12 +163,7 @@ const TrenutnoVozi = () => {
           ))}
         </div>
       </div>
-      {/* <div
-             className={`flex justify-end ${
-               showCenterBtn ? "visible" : "invisible"
-             }`}
-           > */}
-      <div className={"flex justify-end"}>
+      <div className={`flex justify-end ${!users.length && "hidden"}`}>
         <button
           className="flex items-center justify-between"
           onClick={() => {
