@@ -33,7 +33,7 @@ const Navigation = () => {
             )}`}
           >
             <Link href="/">
-              <a className="flex justify-center items-center h-full">
+              <a className="noSelect flex justify-center items-center h-full">
                 <svg className="h-6 md:h-6" viewBox="0 0 576 512">
                   <path
                     fill={colorScheme.carbonPewter}
@@ -49,7 +49,7 @@ const Navigation = () => {
             )}`}
           >
             <Link href="/stats">
-              <a className="flex justify-center items-center h-full">
+              <a className="noSelect flex justify-center items-center h-full">
                 <svg className="h-6 md:h-6" viewBox="0 0 576 512">
                   <path
                     fill={colorScheme.carbonPewter}
@@ -65,7 +65,7 @@ const Navigation = () => {
             )}`}
           >
             <Link href="/dashboard">
-              <a className="flex justify-center items-center h-full">
+              <a className="noSelect flex justify-center items-center h-full">
                 <svg className="h-6 md:h-6" viewBox="0 0 576 512">
                   <path
                     fill="#D6D6D6"

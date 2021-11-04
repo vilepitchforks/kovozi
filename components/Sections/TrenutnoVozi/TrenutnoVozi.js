@@ -104,6 +104,7 @@ const TrenutnoVozi = () => {
   // Find the index of the active current user
   const activeUserIndex = users.findIndex((user, i) => i === condition);
 
+  // Dinamično računaj broj ljudi koji voze na određeni dan za slučaj da se više ljudi prijavi za vozit. Ako više ljudi vozi određeni dan, uzmi u obzir kod računanja offseta.
   const centerUsersSection = () => {
     const halfUsersPlaceholder = Math.floor(
       userContainerRef.current?.getBoundingClientRect().width / 2

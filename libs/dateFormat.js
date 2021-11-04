@@ -49,3 +49,13 @@ export const getRange = range => {
     return `${getDayMonth(range.start)} - ${getDayMonth(range.end)}`;
   }
 };
+
+export const getDateStd = date => {
+  const selectedDay = date ? new Date(date) : new Date();
+
+  const day = selectedDay.getDate();
+  const month = selectedDay.getMonth() + 1;
+  const year = selectedDay.getFullYear();
+  // Returns the current date in format: 2021-10-29
+  return year + "-" + month + "-" + day;
+};

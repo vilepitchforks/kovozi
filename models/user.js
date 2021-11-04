@@ -9,17 +9,20 @@ const picture = {
   width: Number
 };
 
-const userSchema = new mongoose.Schema({
-  id: String,
-  name: String,
-  pictures: {
-    small: picture,
-    normal: picture,
-    large: picture
+const userSchema = new mongoose.Schema(
+  {
+    id: String,
+    name: String,
+    pictures: {
+      small: picture,
+      normal: picture,
+      large: picture
+    },
+    accessToken: String,
+    accessTokenExpires: Date
   },
-  accessToken: String,
-  accessTokenExpires: Date
-});
+  { timestamps: true }
+);
 
 // Next js tends to import models multiple times. To avoid "Cannot overwrite 'user' model once compiled." error, check if model already exists
-export default mongoose.models.user || mongoose.model("user", userSchema);
+export default mongoose.models.User || mongoose.model("User", userSchema);

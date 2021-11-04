@@ -1,7 +1,7 @@
 import MetaHead from "../components/MetaHead/MetaHead";
 
 import TrenutnoVozi from "../components/Sections/TrenutnoVozi/TrenutnoVozi";
-import IdemDanas from "../components/Sections/IdemDanas/IdemDanas";
+import IdemVozimDanas from "../components/Sections/IdemVozimDanas/IdemVozimDanas";
 import KoIdeDanas from "../components/Sections/KoIdeDanas/KoIdeDanas";
 import Raspored from "../components/Sections/Raspored/Raspored";
 
@@ -14,7 +14,7 @@ export default function Home({ user }) {
         <title>{user.name ? user.name + " | KoVozi" : "KoVozi"}</title>
       </MetaHead>
       <TrenutnoVozi />
-      <IdemDanas />
+      <IdemVozimDanas />
       <KoIdeDanas />
       <Raspored />
     </>

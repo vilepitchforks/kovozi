@@ -6,7 +6,7 @@ const NovaVoznjaBtn = () => {
   return (
     <section className="fixed right-5 bottom-14 md:bottom-5 w-12 h-12 rounded-full filter drop-shadow-md bg-carbon-pewter">
       <Link href="/new">
-        <a href="" className="">
+        <a href="" className="noSelect">
           <svg className="w-12 h-12" viewBox="0 0 448 512">
             <path
               fill={colorScheme.carbonEbony}
