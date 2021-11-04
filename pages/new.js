@@ -1,7 +1,17 @@
+import VozimOdDo from "../components/Sections/VozimOdDo/VozimOdDo";
+import MetaHead from "../components/MetaHead/MetaHead";
+
 import { checkAuth } from "../libs/authHelpers";
 
 const New = () => {
-  return <div>New entry</div>;
+  return (
+    <>
+      <MetaHead>
+        <title>Novi unos | KoVozi</title>
+      </MetaHead>
+      <VozimOdDo />
+    </>
+  );
 };
 
 export const getServerSideProps = async ({ req, res, query }) => {

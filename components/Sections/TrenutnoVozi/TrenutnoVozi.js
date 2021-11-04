@@ -2,6 +2,7 @@ import { useEffect, useState, useRef, useLayoutEffect } from "react";
 import Image from "next/image";
 
 import { colorScheme } from "../../../config/constants.js";
+import { getDay, getDate } from "../../../libs/dateFormat.js";
 
 const User = ({ isActive, user, activeUserRef, nonActiveUserRef }) => {
   const imageSize = isActive ? "h-44 w-44" : "h-24 w-24";
@@ -11,7 +12,7 @@ const User = ({ isActive, user, activeUserRef, nonActiveUserRef }) => {
   const marginTop = isActive ? "" : "mt-12";
   const width = isActive ? " w-52" : " w-32";
 
-  const { name, picture } = user;
+  const { name, picture, drivesOn } = user;
 
   return (
     <div
@@ -36,8 +37,12 @@ const User = ({ isActive, user, activeUserRef, nonActiveUserRef }) => {
       <p
         className={nameSize + " mt-1 text-center text-white"}
       >{`${name.first} ${name.last}`}</p>
-      <p className={daySize + " font-light text-carbon-pewter"}>Utorak</p>
-      <p className="text-tiny font-light text-carbon-pewter">24.10.2021</p>
+      <p className={daySize + " font-light text-carbon-pewter"}>
+        {getDay(drivesOn)}
+      </p>
+      <p className="text-tiny font-light text-carbon-pewter">
+        {getDate(drivesOn)}
+      </p>
     </div>
   );
 };
@@ -60,21 +65,33 @@ const TrenutnoVozi = () => {
   useEffect(() => {
     (async () => {
       const localUsers = localStorage.getItem("users");
-      if (localUsers) {
+      if (localUsers && JSON.parse(localUsers)[0].range) {
         setUsers(JSON.parse(localUsers));
       } else {
-        const randomUsers =
-          !localUsers &&
-          !usersFetched &&
-          (await (
-            await fetch(
-              "https://randomuser.me/api/?seed=3113ef4b07df5334&inc=name,picture&results=11"
-            )
-          ).json());
+        const randomUsers = await fetch(
+          "https://randomuser.me/api/?inc=name,picture&results=7"
+        ).then(res => res.json());
+
         if (randomUsers) {
           setUsersFetched(true);
-          setUsers(randomUsers.results);
-          localStorage.setItem("users", JSON.stringify(randomUsers.results));
+          const processed = randomUsers.results.map((user, i) => {
+            const offset = Math.round(Math.random() * 7);
+
+            let start = new Date().setDate(i);
+            let end = new Date().setDate(i + offset * 3);
+            if (i === 3) start = end;
+
+            return {
+              ...user,
+              drivesOn: new Date().setDate(i),
+              range: {
+                start,
+                end
+              }
+            };
+          });
+          setUsers(processed);
+          localStorage.setItem("users", JSON.stringify(processed));
         }
       }
     })();

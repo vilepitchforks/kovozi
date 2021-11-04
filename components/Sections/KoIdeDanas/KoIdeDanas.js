@@ -9,13 +9,13 @@ const User = ({ user }) => {
       className="flex flex-col items-center px-5"
       title={`${name.first} ${name.last}`}
     >
-      <div className="h-14 w-14 flex justify-center items-center bg-green-300 rounded-full">
+      <div className="h-20 w-20 flex justify-center items-center bg-green-300 bg-opacity-40 rounded-full">
         <Image
           // src="/icon-192x192.png"
           src={picture.large}
           alt="Ko Vozi?"
-          width={48}
-          height={48}
+          width={68}
+          height={68}
           className="rounded-full"
         />
       </div>
@@ -43,13 +43,11 @@ const TkoIde = () => {
   }, []);
 
   return (
-    <section className="mt-3">
+    <section className="mt-5">
       <div className="overflow-x-hidden">
-        <div className="flex md:justify-center">
-          <p className="ml-1 mb-1 md:w-96 text-sm text-carbon-gray">
-            {users.length ? "Ko ide danas:" : "Nitko ne ide danas. :("}
-          </p>
-        </div>
+        <p className="ml-1 mb-1 md:mx-auto md:w-3/5 text-sm text-carbon-gray">
+          {users.length ? "Ko ide danas:" : "Nitko ne ide danas. :("}
+        </p>
         <div
           className={`flex ${users.length < 4 ? "justify-evenly" : ""} mt-3 ${
             users.length < 8 ? "md:justify-center" : ""

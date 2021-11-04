@@ -1,5 +1,5 @@
 const VozimOdDo = () => {
-  return <section id="nova-voznja"></section>;
+  return <section>Vozim od do</section>;
 };
 
 export default VozimOdDo;
