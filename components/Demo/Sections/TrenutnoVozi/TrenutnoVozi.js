@@ -1,8 +1,8 @@
 import { useEffect, useState, useRef, useLayoutEffect } from "react";
 import Image from "next/image";
 
-import { colorScheme } from "../../../config/constants.js";
-import { getDay, getDate } from "../../../libs/dateFormat.js";
+import { colorScheme } from "../../../../config/constants.js";
+import { getDay, getDate } from "../../../../libs/dateFormat.js";
 
 const User = ({ isActive, user, activeUserRef, nonActiveUserRef }) => {
   const imageSize = isActive ? "h-44 w-44" : "h-24 w-24";
@@ -47,12 +47,12 @@ const User = ({ isActive, user, activeUserRef, nonActiveUserRef }) => {
   );
 };
 
-const TrenutnoVozi = () => {
+const TrenutnoVozi = ({ users }) => {
   const userContainerRef = useRef(null);
   const activeUserRef = useRef();
   const nonActiveUserRef = useRef();
 
-  const [users, setUsers] = useState([]);
+  // const [users, setUsers] = useState([]);
   const [usersFetched, setUsersFetched] = useState(false);
 
   // const [showCenterBtn, setShowCenterBtn] = useState(false);
@@ -62,40 +62,40 @@ const TrenutnoVozi = () => {
 
   // const time = useRef(Date.now());
 
-  useEffect(() => {
-    (async () => {
-      const localUsers = localStorage.getItem("users");
-      if (localUsers && JSON.parse(localUsers)[0].range) {
-        setUsers(JSON.parse(localUsers));
-      } else {
-        const randomUsers = await fetch(
-          "https://randomuser.me/api/?inc=name,picture&results=7"
-        ).then(res => res.json());
+  // useEffect(() => {
+  //   (async () => {
+  //     const localUsers = localStorage.getItem("users");
+  //     if (localUsers && JSON.parse(localUsers)[0].range) {
+  //       setUsers(JSON.parse(localUsers));
+  //     } else {
+  //       const randomUsers = await fetch(
+  //         "https://randomuser.me/api/?inc=name,picture&results=7"
+  //       ).then(res => res.json());
 
-        if (randomUsers) {
-          setUsersFetched(true);
-          const processed = randomUsers.results.map((user, i) => {
-            const offset = Math.round(Math.random() * 7);
+  //       if (randomUsers) {
+  //         setUsersFetched(true);
+  //         const processed = randomUsers.results.map((user, i) => {
+  //           const offset = Math.round(Math.random() * 7);
 
-            let start = new Date().setDate(i);
-            let end = new Date().setDate(i + offset * 3);
-            if (i === 3) start = end;
+  //           let start = new Date().setDate(i);
+  //           let end = new Date().setDate(i + offset * 3);
+  //           if (i === 3) start = end;
 
-            return {
-              ...user,
-              drivesOn: new Date().setDate(i),
-              range: {
-                start,
-                end
-              }
-            };
-          });
-          setUsers(processed);
-          localStorage.setItem("users", JSON.stringify(processed));
-        }
-      }
-    })();
-  }, []);
+  //           return {
+  //             ...user,
+  //             drivesOn: new Date().setDate(i),
+  //             range: {
+  //               start,
+  //               end
+  //             }
+  //           };
+  //         });
+  //         setUsers(processed);
+  //         localStorage.setItem("users", JSON.stringify(processed));
+  //       }
+  //     }
+  //   })();
+  // }, []);
 
   // Condition for setting the active current user
   // TODO: will most likely be the current date.

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 import MetaHead from "../components/MetaHead/MetaHead";
 import Footer from "../components/Footer/Footer";
@@ -80,6 +81,12 @@ const Login = ({ query }) => {
               </span>
             </div>
           )}
+
+          <Link href="/demo">
+            <a title="Početna" className="mt-10 text-carbon-pewter">
+              Demo &gt;
+            </a>
+          </Link>
         </div>
       </div>
       <Footer />

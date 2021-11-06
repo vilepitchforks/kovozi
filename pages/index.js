@@ -32,6 +32,10 @@ export const getServerSideProps = async ({ req, res }) => {
   // Get existing user
   const user = await getAuthUser(req, res);
 
+  // TODO Redirect user to error page while they are waiting for approval
+  if (!user.approved)
+    return { redirect: { destination: "/not-approved", permanent: false } };
+
   if (user) return { props: { user } };
 
   return redirect;

@@ -19,7 +19,8 @@ const userSchema = new mongoose.Schema(
       large: picture
     },
     accessToken: String,
-    accessTokenExpires: Date
+    accessTokenExpires: Date,
+    approved: { type: Boolean, default: false }
   },
   { timestamps: true }
 );

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { getDay, getDate } from "../../../libs/dateFormat.js";
+import { getDay, getDate } from "../../../../libs/dateFormat.js";
 
 const IdemDanasToggle = ({
   idemDanasChecked,
