@@ -2,7 +2,12 @@ import { useState } from "react";
 
 import { getDay, getDate } from "../../../../libs/dateFormat.js";
 
+import { useGlobalCtx } from "../../../../pages/demo/index.js";
+
 const IdemDanasToggle = ({
+  user,
+  setIdemId,
+  setVozimId,
   idemDanasChecked,
   setIdemDanasChecked,
   setVozimDanasChecked
@@ -24,17 +29,24 @@ const IdemDanasToggle = ({
           setIdemDanasChecked(e.target.checked);
           // Disable VozimDanas state if IdemDanas is set to false
           !e.target.checked && setVozimDanasChecked(false);
+          e.target.checked ? setIdemId(user.id) : setIdemId(null);
+          !e.target.checked && setVozimId(null);
         }}
       />
       <span className="peer-checked:left-6 peer-checked:bg-green-500 transition-all duration-500 pointer-events-none w-5 h-5 block absolute top-1 left-1 rounded-full bg-red-500"></span>
     </div>
-    <label htmlFor="idem" className="ml-5 md:mr-5 text-xl text-carbon-pewter">
+    <label
+      htmlFor="idem"
+      className="ml-5 md:mr-5 cursor-pointer text-xl text-carbon-pewter"
+    >
       {idemDanasChecked ? "Idem danas!" : "Ne idem danas."}
     </label>
   </span>
 );
 
 const VozimDanasToggle = ({
+  user,
+  setVozimId,
   vozimDanasChecked,
   setVozimDanasChecked,
   idemDanasChecked
@@ -42,6 +54,7 @@ const VozimDanasToggle = ({
   const calcChecked = () => {
     if (idemDanasChecked && vozimDanasChecked) return true;
     if (!idemDanasChecked) return false;
+    return false;
   };
 
   const calcShadow = () => {
@@ -76,7 +89,10 @@ const VozimDanasToggle = ({
           name="vozim"
           id="vozim"
           className={`noSelect peer appearance-none border ${calcToggleBorder()} rounded-full w-12 h-7 transition-all duration-500`}
-          onChange={e => setVozimDanasChecked(e.target.checked)}
+          onChange={e => {
+            setVozimDanasChecked(e.target.checked);
+            e.target.checked ? setVozimId(user.id) : setVozimId(null);
+          }}
         />
         <span
           className={`peer-checked:left-6 ${calcToggleButton()} transition-all duration-500 pointer-events-none w-5 h-5 block absolute top-1 left-1 rounded-full`}
@@ -84,7 +100,9 @@ const VozimDanasToggle = ({
       </div>
       <label
         htmlFor="vozim"
-        className="ml-5 md:mr-5 text-xl text-carbon-pewter"
+        className={`ml-5 md:mr-5 ${
+          idemDanasChecked ? "cursor-pointer" : ""
+        } text-xl text-carbon-pewter`}
       >
         {calcChecked() ? "Vozim!" : "Ne vozim."}
       </label>
@@ -96,14 +114,21 @@ const IdemVozimDanas = () => {
   const [idemDanasChecked, setIdemDanasChecked] = useState(false);
   const [vozimDanasChecked, setVozimDanasChecked] = useState(false);
 
+  const { user, setIdemId, setVozimId } = useGlobalCtx();
+
   return (
     <section className="flex flex-wrap justify-between md:justify-center mt-3">
       <IdemDanasToggle
+        user={user}
+        setIdemId={setIdemId}
+        setVozimId={setVozimId}
         idemDanasChecked={idemDanasChecked}
         setIdemDanasChecked={setIdemDanasChecked}
         setVozimDanasChecked={setVozimDanasChecked}
       />
       <VozimDanasToggle
+        user={user}
+        setVozimId={setVozimId}
         vozimDanasChecked={vozimDanasChecked}
         setVozimDanasChecked={setVozimDanasChecked}
         idemDanasChecked={idemDanasChecked}

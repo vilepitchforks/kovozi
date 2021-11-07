@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 
+import { useGlobalCtx } from "../../../../pages/demo/index.js";
+
 const User = ({ user }) => {
   const { name, picture } = user;
 
@@ -24,38 +26,56 @@ const User = ({ user }) => {
 };
 
 const TkoIde = () => {
-  const [users, setUsers] = useState([]);
+  const [goingUsers, setGoingUsers] = useState([]);
+
+  const { users, user, idemId } = useGlobalCtx();
 
   useEffect(() => {
-    const localUsers = JSON.parse(localStorage.getItem("users")) || [];
-
-    let length = Math.round(Math.random() * localUsers.length);
+    let length = Math.round(Math.random() * users.length);
     length = length >= 1 ? length : length + 1;
 
     const fourUsers =
-      localUsers.length &&
+      users.length &&
       Array.from({ length }, (_, i) => {
-        const randomIndex = Math.floor(Math.random() * localUsers.length);
-        return localUsers[randomIndex];
-      });
+        const randomIndex = Math.floor(Math.random() * users.length);
+        return users[randomIndex];
+      })
+        .filter(filteredUser => filteredUser.id !== user.id)
+        .reduce((acc, current) => acc.set(current.id, current), new Map())
+        .values();
 
-    if (fourUsers) setUsers(fourUsers);
-  }, []);
+    // console.log(`fourUsers: `, [...fourUsers]);
+
+    users.length && setGoingUsers([...fourUsers]);
+  }, [users]);
+
+  useEffect(() => {
+    const filtered = goingUsers.filter(
+      filteredUser => filteredUser.id !== user.id
+    );
+    if (idemId) {
+      setGoingUsers([user, ...filtered]);
+    } else {
+      setGoingUsers(filtered);
+    }
+  }, [idemId]);
 
   return (
     <section className="mt-5">
       <div className="overflow-x-hidden">
         <p className="ml-1 mb-1 md:mx-auto md:w-3/5 text-sm text-carbon-gray">
-          {users.length ? "Ko ide danas:" : "Nitko ne ide danas. :("}
+          {goingUsers.length ? "Ko ide danas:" : "Nitko ne ide danas. :("}
         </p>
         <div
-          className={`flex ${users.length < 4 ? "justify-evenly" : ""} mt-3 ${
-            users.length < 8 ? "md:justify-center" : ""
+          className={`flex ${
+            goingUsers.length < 4 ? "justify-evenly" : ""
+          } mt-3 ${
+            goingUsers.length < 8 ? "md:justify-center" : ""
           } overflow-auto scrollbar-hide`}
         >
-          {users.map((user, i) => (
-            <User key={i} user={user} />
-          ))}
+          {goingUsers.length
+            ? goingUsers.map((user, i) => <User key={user.id} user={user} />)
+            : ""}
         </div>
       </div>
     </section>

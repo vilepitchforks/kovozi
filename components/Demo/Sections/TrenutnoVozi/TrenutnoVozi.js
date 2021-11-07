@@ -1,8 +1,10 @@
-import { useEffect, useState, useRef, useLayoutEffect } from "react";
+import React, { useEffect, useState, useRef, useLayoutEffect } from "react";
 import Image from "next/image";
 
 import { colorScheme } from "../../../../config/constants.js";
 import { getDay, getDate } from "../../../../libs/dateFormat.js";
+
+import { useGlobalCtx } from "../../../../pages/demo/index.js";
 
 const User = ({ isActive, user, activeUserRef, nonActiveUserRef }) => {
   const imageSize = isActive ? "h-44 w-44" : "h-24 w-24";
@@ -10,6 +12,7 @@ const User = ({ isActive, user, activeUserRef, nonActiveUserRef }) => {
   const daySize = isActive ? "text-2xl" : "text-l";
 
   const marginTop = isActive ? "" : "mt-12";
+  const marginBottom = isActive ? "" : "mb-16";
   const width = isActive ? " w-52" : " w-32";
 
   const { name, picture, drivesOn } = user;
@@ -40,69 +43,27 @@ const User = ({ isActive, user, activeUserRef, nonActiveUserRef }) => {
       <p className={daySize + " font-light text-carbon-pewter"}>
         {getDay(drivesOn)}
       </p>
-      <p className="text-tiny font-light text-carbon-pewter">
+      <p className={marginBottom + " text-tiny font-light text-carbon-pewter"}>
         {getDate(drivesOn)}
       </p>
     </div>
   );
 };
 
-const TrenutnoVozi = ({ users }) => {
+const TrenutnoVozi = () => {
   const userContainerRef = useRef(null);
   const activeUserRef = useRef();
   const nonActiveUserRef = useRef();
 
-  // const [users, setUsers] = useState([]);
-  const [usersFetched, setUsersFetched] = useState(false);
-
-  // const [showCenterBtn, setShowCenterBtn] = useState(false);
-  // const showCenterBtnInitState = useRef(true);
-
-  // const [activeUser, setActiveUser] = useState("Mikkel");
-
-  // const time = useRef(Date.now());
-
-  // useEffect(() => {
-  //   (async () => {
-  //     const localUsers = localStorage.getItem("users");
-  //     if (localUsers && JSON.parse(localUsers)[0].range) {
-  //       setUsers(JSON.parse(localUsers));
-  //     } else {
-  //       const randomUsers = await fetch(
-  //         "https://randomuser.me/api/?inc=name,picture&results=7"
-  //       ).then(res => res.json());
-
-  //       if (randomUsers) {
-  //         setUsersFetched(true);
-  //         const processed = randomUsers.results.map((user, i) => {
-  //           const offset = Math.round(Math.random() * 7);
-
-  //           let start = new Date().setDate(i);
-  //           let end = new Date().setDate(i + offset * 3);
-  //           if (i === 3) start = end;
-
-  //           return {
-  //             ...user,
-  //             drivesOn: new Date().setDate(i),
-  //             range: {
-  //               start,
-  //               end
-  //             }
-  //           };
-  //         });
-  //         setUsers(processed);
-  //         localStorage.setItem("users", JSON.stringify(processed));
-  //       }
-  //     }
-  //   })();
-  // }, []);
+  const { users, vozimId } = useGlobalCtx();
 
   // Condition for setting the active current user
   // TODO: will most likely be the current date.
-  const condition = Math.floor(Math.random() * users.length);
+  // const condition = Math.floor(Math.random() * users?.length);
+  const condition = vozimId || 0;
 
   // Find the index of the active current user
-  const activeUserIndex = users.findIndex((user, i) => i === condition);
+  const activeUserIndex = users.findIndex((user, i) => user.id === condition);
 
   // Dinamično računaj broj ljudi koji voze na određeni dan za slučaj da se više ljudi prijavi za vozit. Ako više ljudi vozi određeni dan, uzmi u obzir kod računanja offseta.
   const centerUsersSection = () => {
@@ -130,17 +91,15 @@ const TrenutnoVozi = ({ users }) => {
       }px`;
 
     userContainerRef.current.scrollTo(offset - halfUsersPlaceholder, 0);
-    // showCenterBtn.current = false;
-    // setShowCenterBtn(false);
   };
 
   useLayoutEffect(() => {
-    activeUserRef.current && centerUsersSection();
+    centerUsersSection();
     return () => {
       userContainerRef.current.style.paddingLeft = "0px";
       userContainerRef.current.style.paddingRight = "0px";
     };
-  }, [users /* , activeUser */]);
+  }, [users, condition]);
 
   // const throttle = (fn, wait) => {
   //   if (time.current + wait - Date.now() < 0) {
@@ -170,10 +129,10 @@ const TrenutnoVozi = ({ users }) => {
           //   }, 1000)
           // }
         >
-          {users.map((user, i) => (
+          {users?.map((user, i) => (
             <User
               key={i}
-              isActive={i === condition}
+              isActive={user.id === condition}
               user={user}
               activeUserRef={activeUserRef}
               nonActiveUserRef={nonActiveUserRef}
@@ -181,7 +140,7 @@ const TrenutnoVozi = ({ users }) => {
           ))}
         </div>
       </div>
-      <div className={`flex justify-end ${!users.length && "hidden"}`}>
+      <div className={`flex justify-end ${!users?.length && "hidden"}`}>
         <button
           className="noSelect flex items-center justify-between"
           onClick={() => {

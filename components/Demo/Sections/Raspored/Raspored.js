@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 
+import { useGlobalCtx } from "../../../../pages/demo/index.js";
+
 import { getTruncYr, getRange } from "../../../../libs/dateFormat";
 
 const User = ({ user }) => {
@@ -53,13 +55,15 @@ const Item = ({ user, isUser, active }) => {
 };
 
 const Raspored = () => {
-  const [users, setUsers] = useState([]);
+  // const [users, setUsers] = useState([]);
 
-  useEffect(() => {
-    const localUsers = JSON.parse(localStorage.getItem("users")) || [];
+  const { users, user } = useGlobalCtx();
 
-    if (localUsers) setUsers(localUsers);
-  }, []);
+  // useEffect(() => {
+  //   const localUsers = JSON.parse(localStorage.getItem("users")) || [];
+
+  //   if (localUsers) setUsers(localUsers);
+  // }, []);
 
   return (
     <section className="mt-5 mb-32 md:mx-auto md:w-3/5">
@@ -67,11 +71,12 @@ const Raspored = () => {
         {users.length ? "Raspored:" : "Raspored je prazan."}
       </p>
       <div className="mx-1 text-carbon-black">
-        {users.map((user, i) => (
+        {users.map((filteredUser, i) => (
           <Item
             key={i}
-            user={user}
-            isUser={i === Math.floor(Math.random() * users.length)}
+            user={filteredUser}
+            // isUser={i === Math.floor(Math.random() * users.length)}
+            isUser={filteredUser.id === user.id}
             active={i === 1}
           />
         ))}
