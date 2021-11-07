@@ -12,6 +12,7 @@ export const useUsers = () => {
       if (
         localUsers &&
         JSON.parse(localUsers)[0].range &&
+        localUser &&
         JSON.parse(localUser).id
       ) {
         setUser(JSON.parse(localUser));
