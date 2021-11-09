@@ -33,7 +33,8 @@ export const checkAuth = (req, res) => {
 export const getAuthUser = async (req, res) => {
   const cookies = new Cookies(req, res);
   if (req.userId) {
-    connectDb();
+    console.log("Connecting to DB to fetch current user data...");
+    await connectDb();
     try {
       // Check if user exists and render the user
       const user = await User.findById(req.userId).select(

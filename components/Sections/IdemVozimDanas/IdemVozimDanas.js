@@ -1,4 +1,5 @@
 import { useState } from "react";
+import NProgress from "nprogress";
 
 import { getDay, getDate } from "../../../libs/dateFormat.js";
 
@@ -9,6 +10,8 @@ const handleSubmit = async path => {
     }).then(res => res.json());
   } catch (error) {
     console.warn("Error occurred while posting data: ", error.message);
+    // Completes the loading bar
+    NProgress.done();
     return false;
   }
 };
@@ -34,21 +37,30 @@ const IdemDanasToggle = ({
         id="idem"
         className="noSelect peer appearance-none cursor-pointer border border-red-500 rounded-full checked:border-green-500 w-12 h-7 transition-all duration-500"
         onChange={async e => {
+          // Starts the loading bar
+          NProgress.inc();
+
           setIdemDanasChecked(e.target.checked);
-          // Disable VozimDanas state if IdemDanas is set to false
-          !e.target.checked && setVozimDanasChecked(false);
           const res = await handleSubmit(
             "/api/idem?checked=" + e.target.checked
           );
           if (res.success) setTkoIde(res.tkoIde);
-          // Update VozimDanas state if IdemDanas is set to false
+          // Set IdemDanas toggle to false if API call fails
+          if (!res.success) setIdemDanasChecked(false);
+
           if (!e.target.checked) {
+            // Disable VozimDanas state if IdemDanas is set to false
+            setVozimDanasChecked(false);
+            // Update VozimDanas state if IdemDanas is set to false
             const res = await handleSubmit(
               "/api/vozim?checked=" + e.target.checked
             );
 
             if (res.success) setTkoVozi(res.trenutnoVozi);
           }
+
+          // Completes the loading bar
+          NProgress.done();
         }}
       />
       <span className="peer-checked:left-6 peer-checked:bg-green-500 transition-all duration-500 pointer-events-none w-5 h-5 block absolute top-1 left-1 rounded-full bg-red-500"></span>
@@ -107,12 +119,19 @@ const VozimDanasToggle = ({
           id="vozim"
           className={`noSelect peer appearance-none border ${calcToggleBorder()} rounded-full w-12 h-7 transition-all duration-500`}
           onChange={async e => {
+            // Starts the loading bar
+            NProgress.inc();
+
             setVozimDanasChecked(e.target.checked);
             const res = await handleSubmit(
               "/api/vozim?checked=" + e.target.checked
             );
-
             if (res.success) setTkoVozi(res.trenutnoVozi);
+            // Set VozimDanas toggle to false if API call fails
+            if (!res.success) setVozimDanasChecked(false);
+
+            // Completes the loading bar
+            NProgress.done();
           }}
         />
         <span

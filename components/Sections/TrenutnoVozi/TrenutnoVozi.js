@@ -53,7 +53,7 @@ const User = ({ isActive, user, day, activeUserRef, nonActiveUserRef }) => {
 
 // const TrenutnoVozi = ({ trenutnoVozi }) => {
 const TrenutnoVozi = ({ tkoVozi }) => {
-  const userContainerRef = useRef(null);
+  const userContainerRef = useRef();
   const activeUserRef = useRef();
   const nonActiveUserRef = useRef();
   // console.log(`trenutnoVozi: `, trenutnoVozi);
@@ -121,7 +121,7 @@ const TrenutnoVozi = ({ tkoVozi }) => {
       activeUserRef.current?.getBoundingClientRect().width / 2
     );
     const nonActiveUserWidth =
-      nonActiveUserRef.current?.getBoundingClientRect().width;
+      nonActiveUserRef.current?.getBoundingClientRect().width || 0;
 
     const offset = activeUserIndex * nonActiveUserWidth + halfActiveUserWidth;
     // const fullUsersWidth = (users.length - 1) * nonActiveUserWidth + halfActiveUserWidth * 2;

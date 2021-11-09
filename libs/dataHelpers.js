@@ -1,6 +1,7 @@
 import { format, startOfWeek, endOfWeek } from "date-fns";
 
 import Day from "../models/day.js";
+import { connectDb } from "./db.js";
 
 export const getIdemVozimTkoIde = async (req, res) => {
   const start = format(
@@ -11,6 +12,9 @@ export const getIdemVozimTkoIde = async (req, res) => {
   //   connectDb();
 
   try {
+    console.log("Connecting to DB to fetch IdemVozinTkoIde data...");
+    await connectDb();
+
     // Check if user exists and render the user
     let fetchedData = await Day.find({
       day: { $gte: start, $lte: end }
@@ -53,6 +57,9 @@ export const getTrenutnoVozi = async () => {
   const end = format(endOfWeek(new Date(), { weekStartsOn: 1 }), "yyyy-MM-dd");
 
   try {
+    console.log("Connecting to DB to fetch TkoVozi data...");
+    await connectDb();
+
     const trenutnoVoziDocs = await Day.aggregate([
       {
         $match: {
