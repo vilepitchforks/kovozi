@@ -12,6 +12,12 @@ export const Privacy = ({ className }) => (
   </Link>
 );
 
+export const Demo = () => (
+  <Link href="/demo">
+    <a>Demo</a>
+  </Link>
+);
+
 export const Logout = () => (
   <Link href="/api/logout">
     <a>Logout</a>

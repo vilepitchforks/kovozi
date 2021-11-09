@@ -36,7 +36,9 @@ export const getAuthUser = async (req, res) => {
     connectDb();
     try {
       // Check if user exists and render the user
-      const user = await User.findById(req.userId).select("name pictures");
+      const user = await User.findById(req.userId).select(
+        "name pictures approved"
+      );
 
       if (user) return { ...user._doc, _id: user._doc._id.toString() };
 

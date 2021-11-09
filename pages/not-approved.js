@@ -31,6 +31,10 @@ export const getServerSideProps = async ({ req, res }) => {
   // Get existing user
   const user = await getAuthUser(req, res);
 
+  // Redirect user to Home if the user is approved
+  if (user.approved)
+    return { redirect: { destination: "/", permanent: false } };
+
   if (user) return { props: { user } };
 
   return redirect;

@@ -5,7 +5,12 @@ const { _readyState, _hasOpened } = mongoose.connections[0];
 export const connectDb = async () => {
   if (!_readyState && !_hasOpened) {
     try {
-      const connection = await mongoose.connect(process.env.DB_URI, {
+      const mongoUri =
+        process.env.NODE_ENV === "development"
+          ? process.env.DB_URI_DEV
+          : process.env.DB_URI;
+
+      const connection = await mongoose.connect(mongoUri, {
         useNewUrlParser: true,
         useUnifiedTopology: true
       });

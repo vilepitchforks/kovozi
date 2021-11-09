@@ -1,8 +1,11 @@
-import { Logout, Privacy } from "../components/UtilityLinks/UtilityLinks";
+import { Logout, Privacy, Demo } from "../components/UtilityLinks/UtilityLinks";
 
 const Dashboard = () => {
   return (
     <>
+      <div>
+        <Demo />
+      </div>
       <div className="md:hidden">
         <Privacy />
       </div>

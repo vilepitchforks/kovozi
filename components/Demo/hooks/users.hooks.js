@@ -42,7 +42,7 @@ export const useUsers = () => {
           });
           const randomIndex = Math.floor(Math.random() * processed.length);
           const randUser = processed[randomIndex];
-          console.log(`randUser`, randUser);
+
           localStorage.setItem("user", JSON.stringify(randUser));
           localStorage.setItem("users", JSON.stringify(processed));
           setUser(randUser);

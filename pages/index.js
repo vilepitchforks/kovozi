@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import MetaHead from "../components/MetaHead/MetaHead";
 
 import TrenutnoVozi from "../components/Sections/TrenutnoVozi/TrenutnoVozi";
@@ -6,16 +8,25 @@ import KoIdeDanas from "../components/Sections/KoIdeDanas/KoIdeDanas";
 import Raspored from "../components/Sections/Raspored/Raspored";
 
 import { checkAuth, getAuthUser } from "../libs/authHelpers";
+import { getIdemVozimTkoIde, getTrenutnoVozi } from "../libs/dataHelpers";
 
-export default function Home({ user }) {
+export default function Home({ user, idemVozimTkoIde, trenutnoVozi }) {
+  const [tkoIde, setTkoIde] = useState(idemVozimTkoIde.danasIdu);
+  const [tkoVozi, setTkoVozi] = useState(trenutnoVozi);
+
   return (
     <>
       <MetaHead>
         <title>{user.name ? user.name + " | KoVozi" : "KoVozi"}</title>
       </MetaHead>
-      <TrenutnoVozi />
-      <IdemVozimDanas />
-      <KoIdeDanas />
+      <TrenutnoVozi tkoVozi={tkoVozi} />
+      <IdemVozimDanas
+        user={user}
+        idemVozimTkoIde={idemVozimTkoIde}
+        setTkoIde={setTkoIde}
+        setTkoVozi={setTkoVozi}
+      />
+      <KoIdeDanas tkoIde={tkoIde} />
       <Raspored />
     </>
   );
@@ -36,7 +47,13 @@ export const getServerSideProps = async ({ req, res }) => {
   if (!user.approved)
     return { redirect: { destination: "/not-approved", permanent: false } };
 
-  if (user) return { props: { user } };
+  const [idemVozimTkoIde, trenutnoVozi] = await Promise.all([
+    getIdemVozimTkoIde(req, res),
+    getTrenutnoVozi()
+  ]);
+
+  if (user && idemVozimTkoIde && trenutnoVozi)
+    return { props: { user, idemVozimTkoIde, trenutnoVozi } };
 
   return redirect;
 };

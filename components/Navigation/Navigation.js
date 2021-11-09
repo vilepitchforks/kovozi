@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -5,10 +6,19 @@ import { useRouter } from "next/router";
 import { colorScheme } from "../../config/constants.js";
 
 const Navigation = () => {
+  const [user, setUser] = useState({});
+
   const { pathname } = useRouter();
 
   const activeBorder = path =>
     path === pathname ? "border-carbon-pewter" : "border-carbon-black";
+
+  useEffect(() => {
+    (async () => {
+      const res = await fetch("/api/me").then(res => res.json());
+      if (res) setUser(res.user);
+    })();
+  }, []);
 
   return (
     <nav className="fixed w-full z-10 bg-carbon-black">
@@ -78,13 +88,13 @@ const Navigation = () => {
         </ul>
 
         <div className="hidden md:flex items-center">
-          <span className="my-auto mx-4 text-carbon-pewter">John Doe</span>
+          <span className="my-auto mx-4 text-carbon-pewter">{user.name}</span>
           <div className="flex justify-center items-center h-9 w-9 bg-carbon-pewter rounded-full">
             <Image
-              src="https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=4385160084852493&height=50&width=50&ext=1637657866&hash=AeTQQF8zhooHg7neMBM"
+              src={user.pictures?.small.url || "/"}
               alt="Ko Vozi?"
-              width={28}
-              height={28}
+              width={30}
+              height={30}
               className="rounded-full"
             />
           </div>

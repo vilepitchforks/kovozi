@@ -34,17 +34,19 @@ const Navigation = ({ user }) => {
               "/"
             )}`}
           >
-            <a
-              title="Početna"
-              className="noSelect flex justify-center items-center h-full"
-            >
-              <svg className="h-6 md:h-6" viewBox="0 0 576 512">
-                <path
-                  fill={colorScheme.carbonPewter}
-                  d="m512 288 1 160c0 35-29 64-64 64H326l-38-64 81-67c8-7 8-19 0-25l-118-93c-16-11-34 7-23 22l60 83-85 71c-6 5-9 13-4 21l31 52H128c-35 0-64-29-64-64V288H32c-18 0-32-14-32-32 0-9 3-17 10-24L266 8c7-7 15-8 22-8s15 2 22 7l255 225c8 7 12 15 11 24 0 18-15 32-32 32h-32z"
-                />
-              </svg>
-            </a>
+            <Link href="/">
+              <a
+                title="Početna"
+                className="noSelect flex justify-center items-center h-full"
+              >
+                <svg className="h-6 md:h-6" viewBox="0 0 576 512">
+                  <path
+                    fill={colorScheme.carbonPewter}
+                    d="m512 288 1 160c0 35-29 64-64 64H326l-38-64 81-67c8-7 8-19 0-25l-118-93c-16-11-34 7-23 22l60 83-85 71c-6 5-9 13-4 21l31 52H128c-35 0-64-29-64-64V288H32c-18 0-32-14-32-32 0-9 3-17 10-24L266 8c7-7 15-8 22-8s15 2 22 7l255 225c8 7 12 15 11 24 0 18-15 32-32 32h-32z"
+                  />
+                </svg>
+              </a>
+            </Link>
           </li>
           <li
             className={`flex-1 border-t-2 md:border-t-0 md:border-b-2 ${activeBorder(

@@ -1,18 +1,21 @@
 import { useEffect, useState, useRef, useLayoutEffect } from "react";
 import Image from "next/image";
+import { format } from "date-fns";
 
 import { colorScheme } from "../../../config/constants.js";
 import { getDay, getDate } from "../../../libs/dateFormat.js";
 
-const User = ({ isActive, user, activeUserRef, nonActiveUserRef }) => {
+const User = ({ isActive, user, day, activeUserRef, nonActiveUserRef }) => {
   const imageSize = isActive ? "h-44 w-44" : "h-24 w-24";
   const nameSize = isActive ? "text-4xl" : "text-xl";
   const daySize = isActive ? "text-2xl" : "text-l";
 
   const marginTop = isActive ? "" : "mt-12";
+  const marginBottom = isActive ? "" : "mb-16";
   const width = isActive ? " w-52" : " w-32";
 
-  const { name, picture, drivesOn } = user;
+  // const { name, picture, drivesOn } = user;
+  const { name, pictures } = user;
 
   return (
     <div
@@ -27,33 +30,36 @@ const User = ({ isActive, user, activeUserRef, nonActiveUserRef }) => {
       >
         <Image
           // src="/icon-192x192.png"
-          src={picture.large}
+          src={pictures.large.url}
           alt="Ko Vozi?"
           width={isActive ? 160 : 84}
           height={isActive ? 160 : 84}
           className="rounded-full"
         />
       </div>
-      <p
-        className={nameSize + " mt-1 text-center text-white"}
-      >{`${name.first} ${name.last}`}</p>
+      {/* <p className={nameSize + " mt-1 text-center text-white"}>{`${name.first} ${name.last}`}</p> */}
+      <p className={nameSize + " mt-1 text-center text-white"}>{name}</p>
       <p className={daySize + " font-light text-carbon-pewter"}>
-        {getDay(drivesOn)}
+        {/* {getDay(drivesOn)} */}
+        {getDay(day)}
       </p>
-      <p className="text-tiny font-light text-carbon-pewter">
-        {getDate(drivesOn)}
+      <p className={marginBottom + " text-tiny font-light text-carbon-pewter"}>
+        {/* {getDate(drivesOn)} */}
+        {getDate(day)}
       </p>
     </div>
   );
 };
 
-const TrenutnoVozi = () => {
+// const TrenutnoVozi = ({ trenutnoVozi }) => {
+const TrenutnoVozi = ({ tkoVozi }) => {
   const userContainerRef = useRef(null);
   const activeUserRef = useRef();
   const nonActiveUserRef = useRef();
-
-  const [users, setUsers] = useState([]);
-  const [usersFetched, setUsersFetched] = useState(false);
+  // console.log(`trenutnoVozi: `, trenutnoVozi);
+  // const [users, setUsers] = useState([]);
+  // const [days, setDays] = useState(trenutnoVozi);
+  // const [days, setDays] = useState(tkoVozi);
 
   // const [showCenterBtn, setShowCenterBtn] = useState(false);
   // const showCenterBtnInitState = useRef(true);
@@ -62,49 +68,51 @@ const TrenutnoVozi = () => {
 
   // const time = useRef(Date.now());
 
-  useEffect(() => {
-    (async () => {
-      const localUsers = localStorage.getItem("users");
-      if (localUsers && JSON.parse(localUsers)[0].range) {
-        setUsers(JSON.parse(localUsers));
-      } else {
-        const randomUsers = await fetch(
-          "https://randomuser.me/api/?inc=name,picture&results=7"
-        ).then(res => res.json());
+  // useEffect(() => {
+  //   (async () => {
+  //     const localUsers = localStorage.getItem("users");
+  //     if (localUsers && JSON.parse(localUsers)[0].range) {
+  //       setUsers(JSON.parse(localUsers));
+  //     } else {
+  //       const randomUsers = await fetch(
+  //         "https://randomuser.me/api/?inc=name,picture&results=7"
+  //       ).then(res => res.json());
 
-        if (randomUsers) {
-          setUsersFetched(true);
-          const processed = randomUsers.results.map((user, i) => {
-            const offset = Math.round(Math.random() * 7);
+  //       if (randomUsers) {
+  //         const processed = randomUsers.results.map((user, i) => {
+  //           const offset = Math.round(Math.random() * 7);
 
-            let start = new Date().setDate(i);
-            let end = new Date().setDate(i + offset * 3);
-            if (i === 3) start = end;
+  //           let start = new Date().setDate(i);
+  //           let end = new Date().setDate(i + offset * 3);
+  //           if (i === 3) start = end;
 
-            return {
-              ...user,
-              drivesOn: new Date().setDate(i),
-              range: {
-                start,
-                end
-              }
-            };
-          });
-          setUsers(processed);
-          localStorage.setItem("users", JSON.stringify(processed));
-        }
-      }
-    })();
-  }, []);
+  //           return {
+  //             ...user,
+  //             drivesOn: new Date().setDate(i),
+  //             range: {
+  //               start,
+  //               end
+  //             }
+  //           };
+  //         });
+  //         setUsers(processed);
+  //         localStorage.setItem("users", JSON.stringify(processed));
+  //       }
+  //     }
+  //   })();
+  // }, []);
 
   // Condition for setting the active current user
   // TODO: will most likely be the current date.
-  const condition = Math.floor(Math.random() * users.length);
+  // const condition = Math.floor(Math.random() * users.length);
+  const condition = format(new Date(), "yyyy-MM-dd");
 
   // Find the index of the active current user
-  const activeUserIndex = users.findIndex((user, i) => i === condition);
+  // const activeUserIndex = days.findIndex(day => day.day === condition);
+  const activeUserIndex = tkoVozi.findIndex(day => day.day === condition);
 
-  // Dinamično računaj broj ljudi koji voze na određeni dan za slučaj da se više ljudi prijavi za vozit. Ako više ljudi vozi određeni dan, uzmi u obzir kod računanja offseta.
+  // TODO: Dinamično računaj broj ljudi koji voze na određeni dan za slučaj da se više ljudi prijavi za vozit. Ako više ljudi vozi određeni dan, uzmi u obzir kod računanja offseta.
+  // TODO: Centriranje usera ne radi kad je samo jedan aktivan user, ne računa širinu nonactive usera. Napiši posebnu logiku za ako je days.length === 1
   const centerUsersSection = () => {
     const halfUsersPlaceholder = Math.floor(
       userContainerRef.current?.getBoundingClientRect().width / 2
@@ -116,8 +124,10 @@ const TrenutnoVozi = () => {
       nonActiveUserRef.current?.getBoundingClientRect().width;
 
     const offset = activeUserIndex * nonActiveUserWidth + halfActiveUserWidth;
+    // const fullUsersWidth = (users.length - 1) * nonActiveUserWidth + halfActiveUserWidth * 2;
+    // const fullUsersWidth = (days.length - 1) * nonActiveUserWidth + halfActiveUserWidth * 2;
     const fullUsersWidth =
-      (users.length - 1) * nonActiveUserWidth + halfActiveUserWidth * 2;
+      (tkoVozi.length - 1) * nonActiveUserWidth + halfActiveUserWidth * 2;
 
     if (offset <= halfUsersPlaceholder)
       userContainerRef.current.style.paddingLeft = `${
@@ -140,7 +150,9 @@ const TrenutnoVozi = () => {
       userContainerRef.current.style.paddingLeft = "0px";
       userContainerRef.current.style.paddingRight = "0px";
     };
-  }, [users /* , activeUser */]);
+    // }, [users /* , activeUser */]);
+    // }, [days /* , activeUser */]);
+  }, [tkoVozi /* , activeUser */]);
 
   // const throttle = (fn, wait) => {
   //   if (time.current + wait - Date.now() < 0) {
@@ -170,18 +182,25 @@ const TrenutnoVozi = () => {
           //   }, 1000)
           // }
         >
-          {users.map((user, i) => (
-            <User
-              key={i}
-              isActive={i === condition}
-              user={user}
-              activeUserRef={activeUserRef}
-              nonActiveUserRef={nonActiveUserRef}
-            />
-          ))}
+          {/* {days.length
+            ? days.map((day, i) => ( */}
+          {tkoVozi.length
+            ? tkoVozi.map((day, i) => (
+                <User
+                  key={i}
+                  isActive={day.day === condition}
+                  user={day.drives}
+                  day={day.day}
+                  activeUserRef={activeUserRef}
+                  nonActiveUserRef={nonActiveUserRef}
+                />
+              ))
+            : ""}
         </div>
       </div>
-      <div className={`flex justify-end ${!users.length && "hidden"}`}>
+      {/* <div className={`flex justify-end ${!users.length && "hidden"}`}> */}
+      {/* <div className={`flex justify-end ${!days.length && "hidden"}`}> */}
+      <div className={`flex justify-end ${!tkoVozi.length && "hidden"}`}>
         <button
           className="noSelect flex items-center justify-between"
           onClick={() => {

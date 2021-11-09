@@ -101,7 +101,7 @@ export default async (req, res) => {
           .catch(console.log);
       }
     } catch (error) {
-      console.warn(`Error in oauth route: `, error.toJSON());
+      console.warn(`Error in oauth route: `, error.message);
       return res.redirect("/login");
     }
     // User did not grant the permissions

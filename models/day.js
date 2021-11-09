@@ -28,5 +28,7 @@ const daySchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// daySchema.set("toJSON", { getters: true, virtuals: false });
+
 // Next js tends to import models multiple times. To avoid "Cannot overwrite 'user' model once compiled." error, check if model already exists
 export default mongoose.models.Day || mongoose.model("Day", daySchema);
