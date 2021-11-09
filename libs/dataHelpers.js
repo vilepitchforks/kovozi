@@ -59,29 +59,28 @@ export const getTrenutnoVozi = async () => {
           day: { $gte: start, $lte: end }
         }
       },
-      { $project: { day: 1, drives: 1 } },
       {
         $lookup: {
           from: "users",
           localField: "drives",
           foreignField: "_id",
-          as: "drives",
-          pipeline: [
-            {
-              $project: {
-                _id: 0,
-                name: 1,
-                pictures: {
-                  small: { url: 1 },
-                  normal: { url: 1 },
-                  large: { url: 1 }
-                }
-              }
-            }
-          ]
+          as: "drives"
         }
       },
-      { $unwind: "$drives" }
+      { $unwind: "$drives" },
+      {
+        $project: {
+          day: 1,
+          drives: {
+            name: 1,
+            pictures: {
+              small: { url: 1 },
+              normal: { url: 1 },
+              large: { url: 1 }
+            }
+          }
+        }
+      }
     ]);
 
     const trenutnoVozi = JSON.parse(JSON.stringify(trenutnoVoziDocs));
