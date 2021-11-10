@@ -8,9 +8,18 @@ import KoIdeDanas from "../components/Sections/KoIdeDanas/KoIdeDanas";
 import Raspored from "../components/Sections/Raspored/Raspored";
 
 import { checkAuth, getAuthUser } from "../libs/authHelpers";
-import { getIdemVozimTkoIde, getTrenutnoVozi } from "../libs/dataHelpers";
+import {
+  getIdemVozimTkoIde,
+  getRaspored,
+  getTrenutnoVozi
+} from "../libs/dataHelpers";
 
-export default function Home({ user, idemVozimTkoIde, trenutnoVozi }) {
+export default function Home({
+  user,
+  idemVozimTkoIde,
+  trenutnoVozi,
+  raspored
+}) {
   const [tkoIde, setTkoIde] = useState(idemVozimTkoIde.danasIdu);
   const [tkoVozi, setTkoVozi] = useState(trenutnoVozi);
 
@@ -27,7 +36,7 @@ export default function Home({ user, idemVozimTkoIde, trenutnoVozi }) {
         setTkoVozi={setTkoVozi}
       />
       <KoIdeDanas tkoIde={tkoIde} />
-      <Raspored />
+      <Raspored user={user} raspored={raspored} />
     </>
   );
 }
@@ -47,13 +56,14 @@ export const getServerSideProps = async ({ req, res }) => {
   if (!user.approved)
     return { redirect: { destination: "/not-approved", permanent: false } };
 
-  const [idemVozimTkoIde, trenutnoVozi] = await Promise.all([
+  const [idemVozimTkoIde, trenutnoVozi, raspored] = await Promise.all([
     getIdemVozimTkoIde(req, res),
-    getTrenutnoVozi()
+    getTrenutnoVozi(),
+    getRaspored()
   ]);
 
-  if (user && idemVozimTkoIde && trenutnoVozi)
-    return { props: { user, idemVozimTkoIde, trenutnoVozi } };
+  if (user && idemVozimTkoIde && trenutnoVozi && raspored)
+    return { props: { user, idemVozimTkoIde, trenutnoVozi, raspored } };
 
   return redirect;
 };

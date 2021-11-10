@@ -4,17 +4,14 @@ import Image from "next/image";
 import { getTruncYr, getRange } from "../../../libs/dateFormat";
 
 const User = ({ user }) => {
-  const { name, picture } = user;
+  // const { name, picture } = user;
 
   return (
-    <div
-      className="flex flex-col items-center"
-      title={`${name.first} ${name.last}`}
-    >
+    <div className="flex flex-col items-center" title={user.user.name}>
       <div className="h-12 w-12 flex justify-center items-center bg-carbon-pewter rounded-full">
         <Image
           //   src="/icon-192x192.png"
-          src={picture.large}
+          src={user.user.pictures.small.url}
           alt="Ko Vozi?"
           width={40}
           height={40}
@@ -26,7 +23,7 @@ const User = ({ user }) => {
 };
 
 const Item = ({ user, isUser, active }) => {
-  const { name, range } = user;
+  // const { name, range } = user;
 
   const flexOrder = isUser
     ? "flex items-center"
@@ -42,24 +39,30 @@ const Item = ({ user, isUser, active }) => {
     <div className={`${flexOrder} mt-3 flex items-center`}>
       <User user={user} />
       <div className={`${flexOrder} mx-2 h-12 ${activeBck} ${borderRadius}`}>
-        <p className="mx-2 text-sm">{`${name.first} ${name.last}`}</p>
-        <p className="ml-4">{getRange(range)}</p>
+        <p className="mx-2 text-sm">{user.user.name}</p>
+        <p className="ml-4">
+          {getRange({
+            start: user.days[0],
+            end: user.days[user.days.length - 1]
+          })}
+        </p>
         <p className="ml-4 mr-2">
-          {isUser && " | "} {getTruncYr(range.end)} {!isUser && " | "}
+          {isUser && " | "} {getTruncYr(user.days[user.days.length - 1])}
+          {!isUser && " | "}
         </p>
       </div>
     </div>
   );
 };
 
-const Raspored = () => {
-  const [users, setUsers] = useState([]);
+const Raspored = ({ user, raspored }) => {
+  const [users, setUsers] = useState(raspored);
 
-  useEffect(() => {
-    const localUsers = JSON.parse(localStorage.getItem("users")) || [];
+  // useEffect(() => {
+  //   const localUsers = JSON.parse(localStorage.getItem("users")) || [];
 
-    if (localUsers) setUsers(localUsers);
-  }, []);
+  //   if (localUsers) setUsers(localUsers);
+  // }, []);
 
   return (
     <section className="mt-5 mb-32 md:mx-auto md:w-3/5">
@@ -67,11 +70,12 @@ const Raspored = () => {
         {users.length ? "Raspored:" : "Raspored je prazan."}
       </p>
       <div className="mx-1 text-carbon-black">
-        {users.map((user, i) => (
+        {users.map((item, i) => (
           <Item
-            key={i}
-            user={user}
-            isUser={i === Math.floor(Math.random() * users.length)}
+            key={item._id}
+            user={item}
+            // isUser={i === Math.floor(Math.random() * users.length)}
+            isUser={item._id === user._id}
             active={i === 1}
           />
         ))}
