@@ -2,6 +2,8 @@ import withProtect from "../../../libs/middlewares";
 import { getDateStd } from "../../../libs/dateFormat";
 import { getTrenutnoVozi } from "../../../libs/dataHelpers";
 
+import { connectDb } from "../../../libs/db";
+
 import Day from "../../../models/day.js";
 
 export default withProtect(async (req, res) => {
@@ -10,6 +12,9 @@ export default withProtect(async (req, res) => {
       success: false,
       message: "Missing parameter: 'checked'."
     });
+
+  console.log("Connecting to DB for /vozim endpoint...");
+  await connectDb();
 
   // req.userId
   const action =
