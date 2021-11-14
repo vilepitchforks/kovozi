@@ -26,4 +26,4 @@ const userSchema = new mongoose.Schema(
 );
 
 // Next js tends to import models multiple times. To avoid "Cannot overwrite 'user' model once compiled." error, check if model already exists
-export default mongoose.models.User || mongoose.model("User", userSchema);
+export default mongoose.models?.User || mongoose.model("User", userSchema);

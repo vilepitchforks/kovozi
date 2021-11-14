@@ -13,6 +13,7 @@ import {
   getRaspored,
   getTrenutnoVozi
 } from "../libs/dataHelpers";
+import DB from "../libs/db.class.js";
 
 export default function Home({
   user,
@@ -50,16 +51,23 @@ export const getServerSideProps = async ({ req, res }) => {
   if (!isAuthenticated) return redirect;
 
   // Get existing user
-  const user = await getAuthUser(req, res);
+  // const user = await getAuthUser(req, res);
+  const user = await DB.getAuthUser(req, res);
 
   // TODO Redirect user to error page while they are waiting for approval
   if (!user.approved)
     return { redirect: { destination: "/not-approved", permanent: false } };
 
+  // const [idemVozimTkoIde, trenutnoVozi, raspored] = await Promise.all([
+  //   getIdemVozimTkoIde(req, res),
+  //   getTrenutnoVozi(),
+  //   getRaspored()
+  // ]);
+
   const [idemVozimTkoIde, trenutnoVozi, raspored] = await Promise.all([
-    getIdemVozimTkoIde(req, res),
-    getTrenutnoVozi(),
-    getRaspored()
+    DB.getIdemVozimTkoIde(req, res),
+    DB.getTrenutnoVozi(),
+    DB.getRaspored()
   ]);
 
   if (user && idemVozimTkoIde && trenutnoVozi && raspored)

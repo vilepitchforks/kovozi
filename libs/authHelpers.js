@@ -2,6 +2,7 @@ import Cookies from "cookies";
 import jwt from "jsonwebtoken";
 
 import { connectDb } from "./db.js";
+import DB from "./db.class.js";
 
 import User from "../models/user.js";
 
@@ -34,7 +35,8 @@ export const getAuthUser = async (req, res) => {
   const cookies = new Cookies(req, res);
   if (req.userId) {
     console.log("Connecting to DB to fetch current user data...");
-    await connectDb();
+    // await connectDb();
+
     try {
       // Check if user exists and render the user
       const user = await User.findById(req.userId).select(

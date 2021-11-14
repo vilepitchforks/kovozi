@@ -7,7 +7,8 @@ import {
 } from "date-fns";
 
 import Day from "../models/day.js";
-import { connectDb } from "./db.js";
+// import { connectDb } from "./db.js";
+import DB from "./db.class.js";
 
 export const getIdemVozimTkoIde = async (req, res) => {
   const start = format(
@@ -19,7 +20,8 @@ export const getIdemVozimTkoIde = async (req, res) => {
 
   try {
     console.log("Connecting to DB to fetch IdemVozinTkoIde data...");
-    await connectDb();
+    // await connectDb();
+    DB;
 
     // Check if user exists and render the user
     let fetchedData = await Day.find({
@@ -64,7 +66,8 @@ export const getTrenutnoVozi = async () => {
 
   try {
     console.log("Connecting to DB to fetch TkoVozi data...");
-    await connectDb();
+    // await connectDb();
+    DB;
 
     const trenutnoVoziDocs = await Day.aggregate([
       {
@@ -114,7 +117,8 @@ export const getRaspored = async () => {
 
   try {
     console.log("Connecting to DB to fetch Raspored data...");
-    await connectDb();
+    // await connectDb();
+    DB;
 
     const rasporedDocs = await Day.aggregate([
       {
@@ -172,7 +176,8 @@ export const getKalendar = async () => {
 
   try {
     console.log("Connecting to DB to fetch Kalendar data...");
-    await connectDb();
+    // await connectDb();
+    DB;
 
     const kalendarDocs = await Day.aggregate([
       {

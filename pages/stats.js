@@ -6,6 +6,7 @@ import { differenceInCalendarDays, parseISO } from "date-fns";
 import "react-calendar/dist/Calendar.css";
 import { getKalendar } from "../libs/dataHelpers";
 import { checkAuth } from "../libs/authHelpers";
+import DB from "../libs/db.class.js";
 
 function isSameDay(a, b) {
   return differenceInCalendarDays(parseISO(a), b) === 0;
@@ -53,7 +54,8 @@ export const getServerSideProps = async ({ req, res, query }) => {
   if (!isAuthenticated)
     return { redirect: { destination: "/login", permanent: false } };
 
-  const kalendar = await getKalendar();
+  // const kalendar = await getKalendar();
+  const kalendar = await DB.getKalendar();
 
   return { props: { kalendar } };
 };
