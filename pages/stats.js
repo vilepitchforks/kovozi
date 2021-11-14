@@ -54,8 +54,8 @@ export const getServerSideProps = async ({ req, res, query }) => {
   if (!isAuthenticated)
     return { redirect: { destination: "/login", permanent: false } };
 
-  // const kalendar = await getKalendar();
-  const kalendar = await DB.getKalendar();
+  const kalendar = await getKalendar();
+  // const kalendar = await DB.getKalendar();
 
   return { props: { kalendar } };
 };

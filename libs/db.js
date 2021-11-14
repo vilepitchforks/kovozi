@@ -5,10 +5,8 @@ const mongoUri =
     ? process.env.DB_URI_DEV
     : process.env.DB_URI;
 
-let readyState;
-
 export const connectDb = async () => {
-  if (readyState) return;
+  if (mongoose.connections?.[0].readyState) return;
 
   try {
     const connection = await mongoose.connect(mongoUri, {
@@ -16,15 +14,11 @@ export const connectDb = async () => {
       useUnifiedTopology: true
     });
 
-    console.log(`readyState: `, readyState);
-
     if (connection) {
       console.log(
         "MongoDB connected to: ",
         mongoose.connections[0].host.split(".")[0]
       );
-
-      readyState = connection.connections[0].readyState;
     } else {
       console.warn("Mongoose connection failed!");
     }
