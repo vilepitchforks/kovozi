@@ -21,8 +21,7 @@ const IdemDanasToggle = ({
   setIdemDanasChecked,
   setVozimDanasChecked,
   setTkoIde,
-  setTkoVozi,
-  setRaspored
+  setTkoVozi
 }) => (
   <span className="flex ml-1 w-64">
     <div className="relative">
@@ -41,29 +40,26 @@ const IdemDanasToggle = ({
           // Starts the loading bar
           NProgress.inc();
 
-          if (e.target.checked) {
-            setIdemDanasChecked(e.target.checked);
-            const res = await handleSubmit(
-              "/api/idemvozim?idem=" + e.target.checked
-            );
-            if (res.success) setTkoIde(res.tkoIde);
+          setIdemDanasChecked(e.target.checked);
+          const res = await handleSubmit(
+            "/api/idem?checked=" + e.target.checked
+          );
+          if (res.success) setTkoIde(res.tkoIde);
+          // Set IdemDanas toggle to false if API call fails
+          if (!res.success) setIdemDanasChecked(false);
 
-            // Set IdemDanas toggle to false if API call fails
-            if (!res.success) setIdemDanasChecked(false);
-          } else {
-            setIdemDanasChecked(false);
+          if (!e.target.checked) {
             // Disable VozimDanas state if IdemDanas is set to false
             setVozimDanasChecked(false);
             // Update VozimDanas state if IdemDanas is set to false
             const res = await handleSubmit(
-              "/api/idemvozim?idem=false&vozim=false"
+              "/api/vozim?checked=" + e.target.checked
             );
 
             if (res.success) setTkoVozi(res.tkoVozi);
-            if (res.success) setTkoIde(res.tkoIde);
-            if (res.success) setRaspored(res.raspored);
           }
 
+          // Completes the loading bar
           NProgress.done();
         }}
       />
@@ -82,8 +78,7 @@ const VozimDanasToggle = ({
   vozimDanasChecked,
   setVozimDanasChecked,
   idemDanasChecked,
-  setTkoVozi,
-  setRaspored
+  setTkoVozi
 }) => {
   const calcChecked = () => {
     if (idemDanasChecked && vozimDanasChecked) return true;
@@ -129,10 +124,9 @@ const VozimDanasToggle = ({
 
             setVozimDanasChecked(e.target.checked);
             const res = await handleSubmit(
-              "/api/idemvozim?idem=true&vozim=" + e.target.checked
+              "/api/vozim?checked=" + e.target.checked
             );
             if (res.success) setTkoVozi(res.tkoVozi);
-            if (res.success) setRaspored(res.raspored);
             // Set VozimDanas toggle to false if API call fails
             if (!res.success) setVozimDanasChecked(false);
 
@@ -156,12 +150,7 @@ const VozimDanasToggle = ({
   );
 };
 
-const IdemVozimDanas = ({
-  idemVozimTkoIde,
-  setTkoIde,
-  setTkoVozi,
-  setRaspored
-}) => {
+const IdemVozimDanas = ({ idemVozimTkoIde, setTkoIde, setTkoVozi }) => {
   const [idemDanasChecked, setIdemDanasChecked] = useState(
     idemVozimTkoIde.idemDanas
   );
@@ -177,14 +166,12 @@ const IdemVozimDanas = ({
         setVozimDanasChecked={setVozimDanasChecked}
         setTkoIde={setTkoIde}
         setTkoVozi={setTkoVozi}
-        setRaspored={setRaspored}
       />
       <VozimDanasToggle
         vozimDanasChecked={vozimDanasChecked}
         setVozimDanasChecked={setVozimDanasChecked}
         idemDanasChecked={idemDanasChecked}
         setTkoVozi={setTkoVozi}
-        setRaspored={setRaspored}
       />
       <p className="flex items-baseline absolute right-0 sm:relative text-lg text-carbon-gray">
         {getDay()},

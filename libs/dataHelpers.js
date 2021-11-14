@@ -1,30 +1,21 @@
-import {
-  format,
-  startOfWeek,
-  endOfWeek,
-  startOfMonth,
-  endOfMonth
-} from "date-fns";
+import { format } from "date-fns";
+
+import { connectDb } from "./db.js";
 
 import Day from "../models/day.js";
-import { connectDb } from "./db.js";
-import DB from "./db.class.js";
+
+import { startEndRange } from "./dateFormat.js";
+
+const { startOf, endOf } = startEndRange;
 
 export const getIdemVozimTkoIde = async (req, res) => {
-  const start = format(
-    startOfWeek(new Date(), { weekStartsOn: 1 }),
-    "yyyy-MM-dd"
-  );
-  const end = format(endOfWeek(new Date(), { weekStartsOn: 1 }), "yyyy-MM-dd");
-
   try {
-    console.log("Connecting to DB to fetch IdemVozinTkoIde data...");
+    console.log("Connecting to DB to fetch IdemVozimTkoIde data...");
     await connectDb();
-    // DB;
 
     // Check if user exists and render the user
     let fetchedData = await Day.find({
-      day: { $gte: start, $lte: end }
+      day: { $gte: startOf.week, $lte: endOf.week }
     })
       .select("day drives goes")
       .populate("drives goes", "name pictures");
@@ -33,11 +24,11 @@ export const getIdemVozimTkoIde = async (req, res) => {
 
     let idemDanas = false,
       vozimDanas = false,
-      danasIdu = [];
+      tkoIde = [];
 
     data.forEach(day => {
       if (day.day === format(new Date(), "yyyy-MM-dd")) {
-        danasIdu = day.goes;
+        tkoIde = day.goes;
 
         day.goes.forEach(goingUser => {
           if (goingUser._id === req.userId) idemDanas = true;
@@ -49,29 +40,22 @@ export const getIdemVozimTkoIde = async (req, res) => {
       }
     });
 
-    return { idemDanas, vozimDanas, danasIdu };
+    return { idemDanas, vozimDanas, tkoIde };
   } catch (error) {
     console.warn("Error fetching IdemVozimTkoIde data: ", error);
     return false;
   }
 };
 
-export const getTrenutnoVozi = async () => {
-  const start = format(
-    startOfWeek(new Date(), { weekStartsOn: 1 }),
-    "yyyy-MM-dd"
-  );
-  const end = format(endOfWeek(new Date(), { weekStartsOn: 1 }), "yyyy-MM-dd");
-
+export const getTkoVozi = async () => {
   try {
     console.log("Connecting to DB to fetch TkoVozi data...");
     await connectDb();
-    // DB;
 
     const trenutnoVoziDocs = await Day.aggregate([
       {
         $match: {
-          day: { $gte: start, $lte: end }
+          day: { $gte: startOf.week, $lte: endOf.week }
         }
       },
       {
@@ -108,21 +92,14 @@ export const getTrenutnoVozi = async () => {
 };
 
 export const getRaspored = async () => {
-  const start = format(
-    startOfMonth(new Date(), { weekStartsOn: 1 }),
-    "yyyy-MM-dd"
-  );
-  const end = format(endOfMonth(new Date(), { weekStartsOn: 1 }), "yyyy-MM-dd");
-
   try {
     console.log("Connecting to DB to fetch Raspored data...");
     await connectDb();
-    // DB;
 
     const rasporedDocs = await Day.aggregate([
       {
         $match: {
-          day: { $gte: start, $lte: end }
+          day: { $gte: startOf.month, $lte: endOf.month }
         }
       },
       { $unwind: "$drives" },
@@ -167,21 +144,14 @@ export const getRaspored = async () => {
 };
 
 export const getKalendar = async () => {
-  const start = format(
-    startOfMonth(new Date(), { weekStartsOn: 1 }),
-    "yyyy-MM-dd"
-  );
-  const end = format(endOfMonth(new Date(), { weekStartsOn: 1 }), "yyyy-MM-dd");
-
   try {
     console.log("Connecting to DB to fetch Kalendar data...");
     await connectDb();
-    // DB;
 
     const kalendarDocs = await Day.aggregate([
       {
         $match: {
-          day: { $gte: start, $lte: end }
+          day: { $gte: startOf.month, $lte: endOf.month }
         }
       },
       { $unwind: "$drives" },

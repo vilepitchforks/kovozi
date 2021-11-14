@@ -47,7 +47,9 @@ const Item = ({ user, isUser, active }) => {
         <p className="mx-2 text-sm">{`${name.first} ${name.last}`}</p>
         <p className="ml-4">{getRange(range)}</p>
         <p className="ml-4 mr-2">
-          {isUser && " | "} {getTruncYr(range.end)} {!isUser && " | "}
+          {isUser && "|"}
+          {getTruncYr(range.end)}
+          {!isUser && "|"}
         </p>
       </div>
     </div>

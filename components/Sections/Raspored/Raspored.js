@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 
 import { getTruncYr, getRange } from "../../../libs/dateFormat";
@@ -23,8 +23,6 @@ const User = ({ user }) => {
 };
 
 const Item = ({ user, isUser, active }) => {
-  // const { name, range } = user;
-
   const flexOrder = isUser
     ? "flex items-center"
     : "flex items-center flex-row-reverse";
@@ -47,8 +45,9 @@ const Item = ({ user, isUser, active }) => {
           })}
         </p>
         <p className="ml-4 mr-2">
-          {isUser && " | "} {getTruncYr(user.days[user.days.length - 1])}
-          {!isUser && " | "}
+          {isUser && "|"}
+          {getTruncYr(user.days[user.days.length - 1])}
+          {!isUser && "|"}
         </p>
       </div>
     </div>
@@ -56,25 +55,16 @@ const Item = ({ user, isUser, active }) => {
 };
 
 const Raspored = ({ user, raspored }) => {
-  const [users, setUsers] = useState(raspored);
-
-  // useEffect(() => {
-  //   const localUsers = JSON.parse(localStorage.getItem("users")) || [];
-
-  //   if (localUsers) setUsers(localUsers);
-  // }, []);
-
   return (
     <section className="mt-5 mb-32 md:mx-auto md:w-3/5">
       <p className="ml-1 md:ml-0 mb-1 text-sm text-carbon-gray">
-        {users.length ? "Raspored:" : "Raspored je prazan."}
+        {raspored.length ? "Raspored:" : "Raspored je prazan."}
       </p>
       <div className="mx-1 text-carbon-black">
-        {users.map((item, i) => (
+        {raspored.map((item, i) => (
           <Item
             key={item._id}
             user={item}
-            // isUser={i === Math.floor(Math.random() * users.length)}
             isUser={item._id === user._id}
             active={i === 1}
           />

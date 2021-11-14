@@ -1,3 +1,11 @@
+import {
+  format,
+  startOfWeek,
+  endOfWeek,
+  startOfMonth,
+  endOfMonth
+} from "date-fns";
+
 const days = [
   "Nedjelja",
   "Ponedjeljak",
@@ -61,4 +69,15 @@ export const getDateStd = date => {
   month = month > 9 ? month : "0" + month;
   // Returns the current date in format: 2021-10-29
   return year + "-" + month + "-" + day;
+};
+
+export const startEndRange = {
+  startOf: {
+    week: format(startOfWeek(new Date(), { weekStartsOn: 1 }), "yyyy-MM-dd"),
+    month: format(startOfMonth(new Date()), "yyyy-MM-dd")
+  },
+  endOf: {
+    week: format(endOfWeek(new Date(), { weekStartsOn: 1 }), "yyyy-MM-dd"),
+    month: format(endOfMonth(new Date()), "yyyy-MM-dd")
+  }
 };

@@ -2,41 +2,42 @@ import { useState } from "react";
 
 import MetaHead from "../components/MetaHead/MetaHead";
 
-import TrenutnoVozi from "../components/Sections/TrenutnoVozi/TrenutnoVozi";
+import TkoVozi from "../components/Sections/TkoVozi/TkoVozi";
 import IdemVozimDanas from "../components/Sections/IdemVozimDanas/IdemVozimDanas";
-import KoIdeDanas from "../components/Sections/KoIdeDanas/KoIdeDanas";
+import TkoIde from "../components/Sections/TkoIde/TkoIde";
 import Raspored from "../components/Sections/Raspored/Raspored";
 
 import { checkAuth, getAuthUser } from "../libs/authHelpers";
 import {
   getIdemVozimTkoIde,
   getRaspored,
-  getTrenutnoVozi
+  getTkoVozi
 } from "../libs/dataHelpers";
-import DB from "../libs/db.class.js";
 
 export default function Home({
   user,
   idemVozimTkoIde,
   trenutnoVozi,
-  raspored
+  rasporedData
 }) {
-  const [tkoIde, setTkoIde] = useState(idemVozimTkoIde.danasIdu);
+  const [tkoIde, setTkoIde] = useState(idemVozimTkoIde.tkoIde);
   const [tkoVozi, setTkoVozi] = useState(trenutnoVozi);
+  const [raspored, setRaspored] = useState(rasporedData);
 
   return (
     <>
       <MetaHead>
         <title>{user.name ? user.name + " | KoVozi" : "KoVozi"}</title>
       </MetaHead>
-      <TrenutnoVozi tkoVozi={tkoVozi} />
+      <TkoVozi tkoVozi={tkoVozi} />
       <IdemVozimDanas
         user={user}
         idemVozimTkoIde={idemVozimTkoIde}
         setTkoIde={setTkoIde}
         setTkoVozi={setTkoVozi}
+        setRaspored={setRaspored}
       />
-      <KoIdeDanas tkoIde={tkoIde} />
+      <TkoIde tkoIde={tkoIde} />
       <Raspored user={user} raspored={raspored} />
     </>
   );
@@ -51,27 +52,20 @@ export const getServerSideProps = async ({ req, res }) => {
   if (!isAuthenticated) return redirect;
 
   // Get existing user
-  // const user = await getAuthUser(req, res);
-  const user = await DB.getAuthUser(req, res);
+  const user = await getAuthUser(req, res);
 
   // TODO Redirect user to error page while they are waiting for approval
   if (!user.approved)
     return { redirect: { destination: "/not-approved", permanent: false } };
 
-  const [idemVozimTkoIde, trenutnoVozi, raspored] = await Promise.all([
+  const [idemVozimTkoIde, trenutnoVozi, rasporedData] = await Promise.all([
     getIdemVozimTkoIde(req, res),
-    getTrenutnoVozi(),
+    getTkoVozi(),
     getRaspored()
   ]);
 
-  // const [idemVozimTkoIde, trenutnoVozi, raspored] = await Promise.all([
-  //   DB.getIdemVozimTkoIde(req, res),
-  //   DB.getTrenutnoVozi(),
-  //   DB.getRaspored()
-  // ]);
-
-  if (user && idemVozimTkoIde && trenutnoVozi && raspored)
-    return { props: { user, idemVozimTkoIde, trenutnoVozi, raspored } };
+  if (user && idemVozimTkoIde && trenutnoVozi && rasporedData)
+    return { props: { user, idemVozimTkoIde, trenutnoVozi, rasporedData } };
 
   return redirect;
 };

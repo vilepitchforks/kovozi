@@ -2,7 +2,6 @@ import Cookies from "cookies";
 import jwt from "jsonwebtoken";
 
 import { connectDb } from "./db.js";
-import DB from "./db.class.js";
 
 import User from "../models/user.js";
 

@@ -52,7 +52,7 @@ const User = ({ isActive, user, day, activeUserRef, nonActiveUserRef }) => {
 };
 
 // const TrenutnoVozi = ({ trenutnoVozi }) => {
-const TrenutnoVozi = ({ tkoVozi }) => {
+const TkoVozi = ({ tkoVozi }) => {
   const userContainerRef = useRef();
   const activeUserRef = useRef();
   const nonActiveUserRef = useRef();
@@ -227,4 +227,4 @@ const TrenutnoVozi = ({ tkoVozi }) => {
   );
 };
 
-export default TrenutnoVozi;
+export default TkoVozi;
